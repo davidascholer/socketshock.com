@@ -161,6 +161,26 @@ h1, h2, h3, h4, h5, h6 {
   color: oklch(0.95 0.01 260);
 }
 
+.header-fixed .glass-card,
+.light-mode .header-fixed .glass-card {
+  background: linear-gradient(135deg, oklch(0.62 0.08 180 / 0.95), oklch(0.58 0.07 180 / 0.9));
+  border: 1px solid oklch(0.70 0.10 180 / 0.4);
+}
+
+footer.dark-section,
+.light-mode footer.dark-section {
+  --background: oklch(0.62 0.08 180);
+  --muted: oklch(0.55 0.07 180);
+  --muted-foreground: oklch(0.92 0.02 180);
+  --border: oklch(0.70 0.10 180 / 0.4);
+  background-color: oklch(0.62 0.08 180);
+}
+
+footer.dark-section .bg-gradient-to-t,
+.light-mode footer.dark-section .bg-gradient-to-t {
+  background: linear-gradient(to top, oklch(0.55 0.07 180), transparent, transparent);
+}
+
 .dark-section .glass-card {
   background: linear-gradient(135deg, oklch(0.18 0.01 260 / 0.8), oklch(0.14 0.008 260 / 0.6));
   border: 1px solid oklch(0.35 0.02 260 / 0.3);
