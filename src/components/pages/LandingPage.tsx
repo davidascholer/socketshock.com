@@ -24,7 +24,6 @@ import {
   Check,
   Crown,
   Buildings,
-  Sparkle,
 } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 
@@ -226,7 +225,7 @@ function FloatingParticle({ delay, x, y }: { delay: number; x: number; y: number
       className="absolute pointer-events-none"
       style={{ left: `${x}%`, top: `${y}%` }}
     >
-      <Sparkle className="w-4 h-4 text-primary/40" weight="fill" />
+      <Lightning className="w-4 h-4 text-primary/40" weight="fill" />
     </motion.div>
   )
 }
@@ -367,15 +366,6 @@ const pricingPlans = [
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
   const heroRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  })
-  
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9])
-  const smoothY = useSpring(heroY, { stiffness: 100, damping: 30 })
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -400,7 +390,6 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
   }
 
   const titleText = "Build Faster."
-  const highlightText = "Ship Smarter."
 
   return (
     <div className="relative">
@@ -430,7 +419,6 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         </div>
 
         <motion.div
-          style={{ y: smoothY, opacity: heroOpacity, scale: heroScale }}
           className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 text-center"
         >
           <motion.div
@@ -464,19 +452,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   </motion.span>
                 ))}
               </span>{' '}
-              <span className="gradient-text animate-text-glow inline-block overflow-hidden">
-                {highlightText.split('').map((char, i) => (
-                  <motion.span
-                    key={i}
-                    custom={i + titleText.length}
-                    variants={letterVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="inline-block"
-                  >
-                    {char === ' ' ? '\u00A0' : char}
-                  </motion.span>
-                ))}
+              <span className="gradient-text animate-text-glow">
+                Ship Smarter.
               </span>
             </motion.h1>
 
