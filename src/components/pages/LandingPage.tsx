@@ -18,6 +18,8 @@ import {
   Database,
   CurrencyDollar,
   ArrowRight,
+  Quotes,
+  Star,
 } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 
@@ -26,6 +28,57 @@ type Page = 'home' | 'signin' | 'privacy' | 'terms'
 interface LandingPageProps {
   onNavigate: (page: Page) => void
 }
+
+const testimonials = [
+  {
+    name: 'Sarah Chen',
+    role: 'CTO',
+    company: 'TechScale Inc.',
+    avatar: 'SC',
+    rating: 5,
+    quote: 'NexusFlow transformed our deployment pipeline. What used to take hours now happens in minutes. The CI/CD integration is absolutely seamless.',
+  },
+  {
+    name: 'Marcus Johnson',
+    role: 'Lead Developer',
+    company: 'CloudNine Solutions',
+    avatar: 'MJ',
+    rating: 5,
+    quote: 'The AI integration features are game-changing. We built intelligent features into our app that would have taken months to develop from scratch.',
+  },
+  {
+    name: 'Emily Rodriguez',
+    role: 'Engineering Manager',
+    company: 'DataFlow Systems',
+    avatar: 'ER',
+    rating: 5,
+    quote: 'Best developer experience I\'ve encountered. The UI building tools and analytics dashboards give us real-time insights that drive decisions.',
+  },
+  {
+    name: 'David Park',
+    role: 'Founder & CEO',
+    company: 'Startup Forge',
+    avatar: 'DP',
+    rating: 5,
+    quote: 'As a startup, speed is everything. NexusFlow let us ship our MVP in weeks instead of months. The competitive pricing made it a no-brainer.',
+  },
+  {
+    name: 'Aisha Patel',
+    role: 'Senior Architect',
+    company: 'Enterprise Logic',
+    avatar: 'AP',
+    rating: 5,
+    quote: 'Security was our top concern. NexusFlow\'s authentication system and encryption standards exceeded our enterprise compliance requirements.',
+  },
+  {
+    name: 'James Morrison',
+    role: 'VP of Engineering',
+    company: 'ScaleUp Tech',
+    avatar: 'JM',
+    rating: 5,
+    quote: 'The project management tools and progress reports keep our entire team aligned. We\'ve cut meeting time in half while improving output quality.',
+  },
+]
 
 const features = [
   { icon: CurrencyDollar, title: 'Competitive Rates', description: 'Enjoy transparent, flexible pricing models designed to scale seamlessly with your business. No hidden fees or surprise charges—just straightforward costs that make budgeting simple and predictable for teams of any size.' },
@@ -296,6 +349,86 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                       <p className="text-muted-foreground leading-relaxed">
                         {tool.description}
                       </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-accent/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+
+        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ type: 'spring', damping: 15 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            >
+              <Quotes className="w-4 h-4 text-primary" weight="fill" />
+              <span className="text-sm font-medium text-primary">Customer Stories</span>
+            </motion.div>
+
+            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+              Trusted by{' '}
+              <span className="gradient-text">Industry Leaders</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              See what developers and teams around the world are saying about NexusFlow
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group"
+              >
+                <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border relative">
+                  <Quotes 
+                    className="absolute top-4 right-4 w-8 h-8 text-primary/10 group-hover:text-primary/20 transition-colors" 
+                    weight="fill" 
+                  />
+                  
+                  <div className="flex items-center gap-1 mb-4">
+                    {Array.from({ length: testimonial.rating }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-amber-400" weight="fill" />
+                    ))}
+                  </div>
+
+                  <p className="text-foreground/90 leading-relaxed mb-6 text-sm">
+                    "{testimonial.quote}"
+                  </p>
+
+                  <div className="flex items-center gap-3 pt-4 border-t border-border/50">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-semibold text-sm">
+                      {testimonial.avatar}
+                    </div>
+                    <div>
+                      <div className="font-heading font-semibold text-foreground text-sm">
+                        {testimonial.name}
+                      </div>
+                      <div className="text-muted-foreground text-xs">
+                        {testimonial.role} at {testimonial.company}
+                      </div>
                     </div>
                   </div>
                 </div>
