@@ -47,6 +47,13 @@ A stunning, animation-rich SaaS product landing page that showcases development 
 - **Progression**: Section animates in → User compares plans → Hovers for interaction effects → Clicks CTA to sign up
 - **Success criteria**: Plans are clearly differentiated, Professional tier stands out as "Most Popular", all CTAs link to sign-in, responsive on all devices
 
+### Feature Comparison Table
+- **Functionality**: Detailed side-by-side comparison table showing all features across Starter, Professional, and Enterprise tiers
+- **Purpose**: Helps users make informed decisions by clearly showing what's included in each plan
+- **Trigger**: Scroll below pricing cards
+- **Progression**: Table animates in row by row → User scans features → Compares values across columns → Professional column subtly highlighted → User identifies best plan for their needs
+- **Success criteria**: Table is responsive with horizontal scroll on mobile, rows animate on scroll, Professional column visually emphasized, checkmarks/dashes clearly show feature availability
+
 ### Navigation Header
 - **Functionality**: Fixed header with logo and login link
 - **Purpose**: Consistent navigation and branding across all pages

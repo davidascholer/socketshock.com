@@ -661,6 +661,117 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           >
             All plans include a 14-day free trial. No credit card required.
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-20"
+          >
+            <h3 className="font-heading font-bold text-2xl md:text-3xl text-center mb-10">
+              Compare{' '}
+              <span className="gradient-text">All Features</span>
+            </h3>
+
+            <div className="glass-card rounded-2xl overflow-hidden gradient-border">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[700px]">
+                  <thead>
+                    <tr className="border-b border-border/50">
+                      <th className="text-left p-5 font-heading font-semibold text-foreground bg-card/50">
+                        Feature
+                      </th>
+                      {pricingPlans.map((plan) => (
+                        <th 
+                          key={plan.name} 
+                          className={`p-5 text-center font-heading font-semibold ${
+                            plan.popular 
+                              ? 'bg-primary/10 text-primary' 
+                              : 'text-foreground bg-card/50'
+                          }`}
+                        >
+                          <div className="flex flex-col items-center gap-1">
+                            <span>{plan.name}</span>
+                            {plan.popular && (
+                              <span className="text-xs font-normal text-primary/80">Recommended</span>
+                            )}
+                          </div>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { feature: 'Projects', starter: '3 projects', pro: 'Unlimited', enterprise: 'Unlimited' },
+                      { feature: 'Storage', starter: '5 GB', pro: '100 GB', enterprise: 'Unlimited' },
+                      { feature: 'Team Members', starter: '2 members', pro: '10 members', enterprise: 'Unlimited' },
+                      { feature: 'CI/CD Pipeline', starter: 'Basic', pro: 'Advanced + Parallel', enterprise: 'Custom + Dedicated' },
+                      { feature: 'Deployments/Month', starter: '100', pro: '1,000', enterprise: 'Unlimited' },
+                      { feature: 'Analytics', starter: 'Standard', pro: 'Advanced + Reports', enterprise: 'Enterprise + Custom' },
+                      { feature: 'API Rate Limit', starter: '1K req/hr', pro: '10K req/hr', enterprise: 'Unlimited' },
+                      { feature: 'Support', starter: 'Community', pro: '24hr Priority', enterprise: '24/7 Dedicated' },
+                      { feature: 'Custom Integrations', starter: false, pro: true, enterprise: true },
+                      { feature: 'Team Collaboration', starter: false, pro: true, enterprise: true },
+                      { feature: 'API Access', starter: false, pro: true, enterprise: true },
+                      { feature: 'SSO / SAML', starter: false, pro: false, enterprise: true },
+                      { feature: 'Dedicated Infrastructure', starter: false, pro: false, enterprise: true },
+                      { feature: 'SLA Guarantee', starter: false, pro: '99.9%', enterprise: '99.99%' },
+                      { feature: 'On-Premise Deployment', starter: false, pro: false, enterprise: true },
+                      { feature: 'Advanced Audit Logs', starter: false, pro: false, enterprise: true },
+                      { feature: 'Custom Security Policies', starter: false, pro: false, enterprise: true },
+                    ].map((row, index) => (
+                      <motion.tr
+                        key={row.feature}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.02 * index }}
+                        className="border-b border-border/30 last:border-b-0 hover:bg-card/30 transition-colors"
+                      >
+                        <td className="p-4 text-foreground/90 font-medium text-sm">
+                          {row.feature}
+                        </td>
+                        <td className="p-4 text-center">
+                          {typeof row.starter === 'boolean' ? (
+                            row.starter ? (
+                              <Check className="w-5 h-5 text-primary mx-auto" weight="bold" />
+                            ) : (
+                              <span className="text-muted-foreground/40">—</span>
+                            )
+                          ) : (
+                            <span className="text-muted-foreground text-sm">{row.starter}</span>
+                          )}
+                        </td>
+                        <td className={`p-4 text-center ${pricingPlans[1].popular ? 'bg-primary/5' : ''}`}>
+                          {typeof row.pro === 'boolean' ? (
+                            row.pro ? (
+                              <Check className="w-5 h-5 text-primary mx-auto" weight="bold" />
+                            ) : (
+                              <span className="text-muted-foreground/40">—</span>
+                            )
+                          ) : (
+                            <span className="text-foreground/90 text-sm font-medium">{row.pro}</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-center">
+                          {typeof row.enterprise === 'boolean' ? (
+                            row.enterprise ? (
+                              <Check className="w-5 h-5 text-primary mx-auto" weight="bold" />
+                            ) : (
+                              <span className="text-muted-foreground/40">—</span>
+                            )
+                          ) : (
+                            <span className="text-muted-foreground text-sm">{row.enterprise}</span>
+                          )}
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
