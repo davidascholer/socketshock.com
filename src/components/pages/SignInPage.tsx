@@ -71,34 +71,91 @@ export default function SignInPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-24 pb-12 px-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="glass-card rounded-3xl p-12 text-center max-w-md glow-effect"
+      <div className="min-h-screen flex items-center justify-center pt-24 pb-12 px-4 relative overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
         >
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-primary/30 rounded-full"
+              initial={{ 
+                x: '50%', 
+                y: '50%',
+                scale: 0
+              }}
+              animate={{ 
+                x: `${Math.random() * 100}%`,
+                y: `${Math.random() * 100}%`,
+                scale: [0, 1, 0],
+                opacity: [0, 1, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                delay: i * 0.1,
+                ease: "easeOut"
+              }}
+            />
+          ))}
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5, rotateY: -90 }}
+          animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+          transition={{ duration: 0.6, type: "spring" }}
+          className="glass-card rounded-3xl p-12 text-center max-w-md glow-effect relative overflow-hidden"
+        >
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', damping: 10, delay: 0.2 }}
-            className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-6"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: 'spring', damping: 8, delay: 0.3 }}
+            className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-6 relative z-10"
           >
-            <CheckCircle className="w-10 h-10 text-primary" weight="fill" />
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <CheckCircle className="w-10 h-10 text-primary" weight="fill" />
+            </motion.div>
           </motion.div>
-          <h2 className="font-heading font-bold text-2xl text-foreground mb-4">
-            Application Received!
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            Thank you for your interest in NexusFlow. Our team will review your application and get back to you within 24-48 hours.
-          </p>
-          <Button
-            onClick={() => setIsSubmitted(false)}
-            variant="outline"
-            className="border-primary/30 hover:border-primary hover:bg-primary/10"
+          <motion.h2 
+            className="font-heading font-bold text-2xl text-foreground mb-4 relative z-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
           >
-            Submit Another Application
-          </Button>
+            Application Received!
+          </motion.h2>
+          <motion.p 
+            className="text-muted-foreground mb-6 relative z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            Thank you for your interest in NexusFlow. Our team will review your application and get back to you within 24-48 hours.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button
+              onClick={() => setIsSubmitted(false)}
+              variant="outline"
+              className="border-primary/30 hover:border-primary hover:bg-primary/10 relative z-10"
+            >
+              Submit Another Application
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
     )
@@ -107,36 +164,87 @@ export default function SignInPage() {
   return (
     <div className="min-h-screen pt-24 pb-12 px-4">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+        <motion.div 
+          className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            x: [0, 30, 0],
+            y: [0, -20, 0]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl"
+          animate={{ 
+            scale: [1, 1.3, 1],
+            x: [0, -20, 0],
+            y: [0, 30, 0]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
       </div>
 
       <div className="relative mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="hidden lg:block"
+            initial={{ opacity: 0, x: -80, rotateY: -15 }}
+            animate={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="hidden lg:block perspective-1000"
           >
-            <div className="glass-card rounded-3xl p-10 gradient-border">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+            <motion.div 
+              className="glass-card rounded-3xl p-10 gradient-border relative overflow-hidden"
+              whileHover={{ scale: 1.02, rotateY: 2 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.div 
+                className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-2xl"
+                animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 5, repeat: Infinity }}
+              />
+              <div className="flex items-center gap-3 mb-8 relative z-10">
+                <motion.div 
+                  className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center"
+                  whileHover={{ rotate: 180, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <Lightning className="w-6 h-6 text-primary" weight="fill" />
-                </div>
+                </motion.div>
                 <span className="font-heading font-bold text-2xl text-foreground">
                   NexusFlow
                 </span>
               </div>
 
-              <h2 className="font-heading font-bold text-3xl text-foreground mb-6">
+              <motion.h2 
+                className="font-heading font-bold text-3xl text-foreground mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
                 Let's Build Something{' '}
-                <span className="gradient-text">Amazing</span> Together
-              </h2>
+                <motion.span 
+                  className="gradient-text"
+                  animate={{ 
+                    textShadow: [
+                      "0 0 10px oklch(0.62 0.08 180 / 0.3)",
+                      "0 0 20px oklch(0.62 0.08 180 / 0.5)",
+                      "0 0 10px oklch(0.62 0.08 180 / 0.3)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  Amazing
+                </motion.span> Together
+              </motion.h2>
 
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+              <motion.p 
+                className="text-muted-foreground text-lg mb-8 leading-relaxed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
                 Ready to take your project to the next level? Tell us about your vision and we'll help you bring it to life with our cutting-edge development platform.
-              </p>
+              </motion.p>
 
               <div className="space-y-4">
                 {[
@@ -147,83 +255,93 @@ export default function SignInPage() {
                 ].map((benefit, index) => (
                   <motion.div
                     key={benefit}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
+                    transition={{ delay: 0.5 + index * 0.1, type: "spring" }}
+                    whileHover={{ x: 5, scale: 1.02 }}
                     className="flex items-center gap-3"
                   >
-                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+                    <motion.div 
+                      className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center"
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.4 }}
+                    >
                       <CheckCircle className="w-4 h-4 text-primary" weight="fill" />
-                    </div>
+                    </motion.div>
                     <span className="text-foreground">{benefit}</span>
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: 80, rotateY: 15 }}
+            animate={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="perspective-1000"
           >
-            <div className="glass-card rounded-3xl p-8 md:p-10 glow-effect gradient-border">
-              <div className="text-center mb-8">
-                <h1 className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-2">
+            <motion.div 
+              className="glass-card rounded-3xl p-8 md:p-10 glow-effect gradient-border relative overflow-hidden"
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50"
+              />
+              <div className="text-center mb-8 relative z-10">
+                <motion.h1 
+                  className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-2"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
                   Become a Client
-                </h1>
-                <p className="text-muted-foreground">
+                </motion.h1>
+                <motion.p 
+                  className="text-muted-foreground"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
                   Fill out the form below to get started
-                </p>
+                </motion.p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-foreground flex items-center gap-2">
-                    <User className="w-4 h-4 text-primary" />
-                    Full Name <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="John Doe"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="bg-muted/50 border-border/50 focus:border-primary"
-                  />
-                </div>
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                {[
+                  { id: 'name', icon: User, label: 'Full Name', required: true, type: 'text', placeholder: 'John Doe' },
+                  { id: 'email', icon: Envelope, label: 'Email Address', required: true, type: 'email', placeholder: 'john@company.com' },
+                  { id: 'company', icon: Buildings, label: 'Company Name', required: false, type: 'text', placeholder: 'Your Company Inc.' },
+                ].map((field, index) => (
+                  <motion.div 
+                    key={field.id} 
+                    className="space-y-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
+                  >
+                    <Label htmlFor={field.id} className="text-foreground flex items-center gap-2">
+                      <field.icon className="w-4 h-4 text-primary" />
+                      {field.label} {field.required && <span className="text-destructive">*</span>}
+                    </Label>
+                    <Input
+                      id={field.id}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      value={formData[field.id as keyof typeof formData]}
+                      onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
+                      className="bg-muted/50 border-border/50 focus:border-primary transition-all duration-300 focus:scale-[1.01]"
+                    />
+                  </motion.div>
+                ))}
 
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground flex items-center gap-2">
-                    <Envelope className="w-4 h-4 text-primary" />
-                    Email Address <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="john@company.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="bg-muted/50 border-border/50 focus:border-primary"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="company" className="text-foreground flex items-center gap-2">
-                    <Buildings className="w-4 h-4 text-primary" />
-                    Company Name
-                  </Label>
-                  <Input
-                    id="company"
-                    type="text"
-                    placeholder="Your Company Inc."
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="bg-muted/50 border-border/50 focus:border-primary"
-                  />
-                </div>
-
-                <div className="space-y-2">
+                <motion.div 
+                  className="space-y-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
                   <Label className="text-foreground flex items-center gap-2">
                     <Lightning className="w-4 h-4 text-primary" />
                     Project Type <span className="text-destructive">*</span>
@@ -243,9 +361,14 @@ export default function SignInPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
+                </motion.div>
 
-                <div className="space-y-2">
+                <motion.div 
+                  className="space-y-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 }}
+                >
                   <Label htmlFor="message" className="text-foreground flex items-center gap-2">
                     <ChatCircle className="w-4 h-4 text-primary" />
                     Project Details
@@ -255,15 +378,21 @@ export default function SignInPage() {
                     placeholder="Tell us about your project, goals, and timeline..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="bg-muted/50 border-border/50 focus:border-primary min-h-[120px]"
+                    className="bg-muted/50 border-border/50 focus:border-primary min-h-[120px] transition-all duration-300 focus:scale-[1.01]"
                   />
-                </div>
+                </motion.div>
 
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div 
+                  whileHover={{ scale: 1.03 }} 
+                  whileTap={{ scale: 0.97 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1 }}
+                >
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 text-lg glow-effect gap-2"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 text-lg glow-effect gap-2 relative overflow-hidden group"
                   >
                     {isSubmitting ? (
                       <>
@@ -276,14 +405,27 @@ export default function SignInPage() {
                       </>
                     ) : (
                       <>
-                        Submit Application
-                        <PaperPlaneTilt className="w-5 h-5" weight="fill" />
+                        <span className="relative z-10 flex items-center gap-2">
+                          Submit Application
+                          <motion.span
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                          >
+                            <PaperPlaneTilt className="w-5 h-5" weight="fill" />
+                          </motion.span>
+                        </span>
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                          initial={{ x: '-100%' }}
+                          whileHover={{ x: '100%' }}
+                          transition={{ duration: 0.5 }}
+                        />
                       </>
                     )}
                   </Button>
                 </motion.div>
               </form>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
