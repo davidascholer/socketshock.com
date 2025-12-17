@@ -28,20 +28,20 @@ interface LandingPageProps {
 }
 
 const features = [
-  { icon: CurrencyDollar, title: 'Competitive Rates', description: 'Transparent pricing that scales with your needs' },
-  { icon: Rocket, title: 'Speed', description: 'Lightning-fast development and deployment cycles' },
-  { icon: Lightning, title: 'Quality', description: 'Enterprise-grade code with rigorous testing' },
-  { icon: ShieldCheck, title: 'Security', description: 'Bank-level security protocols and encryption' },
-  { icon: Globe, title: 'Content Distribution', description: 'Global CDN for blazing fast content delivery' },
-  { icon: Flask, title: 'Testing', description: 'Comprehensive automated testing suites' },
-  { icon: GitBranch, title: 'CI/CD', description: 'Seamless continuous integration and deployment' },
-  { icon: GitBranch, title: 'Professional Git Repos', description: 'Best-in-class version control workflows' },
-  { icon: Layout, title: 'Beautiful UI', description: 'Stunning interfaces that users love' },
-  { icon: Cloud, title: 'Backend Services', description: 'Scalable infrastructure that grows with you' },
-  { icon: Robot, title: 'AI Integration', description: 'Cutting-edge AI and ML capabilities' },
-  { icon: Plugs, title: 'OpenAPI Spec', description: 'Industry-standard API documentation' },
-  { icon: Lock, title: 'Authentication', description: 'Secure user management and SSO' },
-  { icon: Wrench, title: 'Plugin Ecosystem', description: 'Connect to your favorite services' },
+  { icon: CurrencyDollar, title: 'Competitive Rates', description: 'Enjoy transparent, flexible pricing models designed to scale seamlessly with your business. No hidden fees or surprise charges—just straightforward costs that make budgeting simple and predictable for teams of any size.' },
+  { icon: Rocket, title: 'Speed', description: 'Experience lightning-fast development cycles that get your products to market faster than ever. Our optimized workflows and intelligent automation cut deployment times by up to 70%, giving you a competitive edge.' },
+  { icon: Lightning, title: 'Quality', description: 'Deliver enterprise-grade code backed by rigorous quality assurance processes. Every line is reviewed, tested, and optimized to meet the highest industry standards, ensuring reliability your users can count on.' },
+  { icon: ShieldCheck, title: 'Security', description: 'Protect your applications with bank-level security protocols, end-to-end encryption, and comprehensive vulnerability scanning. Rest easy knowing your data and your users are safeguarded by industry-leading practices.' },
+  { icon: Globe, title: 'Content Distribution', description: 'Leverage our global CDN infrastructure spanning 200+ edge locations worldwide. Deliver content blazingly fast to users anywhere on the planet with sub-50ms latency and 99.99% uptime guaranteed.' },
+  { icon: Flask, title: 'Testing', description: 'Ship with confidence using our comprehensive automated testing suites. From unit tests to end-to-end integration testing, catch bugs before they reach production and maintain code quality at scale.' },
+  { icon: GitBranch, title: 'CI/CD', description: 'Streamline your entire development pipeline with seamless continuous integration and deployment. Automate builds, tests, and releases to deliver updates faster while maintaining rock-solid stability.' },
+  { icon: GitBranch, title: 'Professional Git Repos', description: 'Collaborate effectively with best-in-class version control workflows. Enjoy advanced branching strategies, code review tools, and seamless integrations that keep your team aligned and productive.' },
+  { icon: Layout, title: 'Beautiful UI', description: 'Create stunning, pixel-perfect interfaces that users love and remember. Our design systems and component libraries empower you to build visually impressive applications without sacrificing performance.' },
+  { icon: Cloud, title: 'Backend Services', description: 'Build on scalable, resilient infrastructure that grows effortlessly with your user base. From serverless functions to containerized microservices, we provide the foundation for your most ambitious projects.' },
+  { icon: Robot, title: 'AI Integration', description: 'Harness cutting-edge artificial intelligence and machine learning capabilities directly in your applications. From natural language processing to predictive analytics, unlock powerful AI-driven features with ease.' },
+  { icon: Plugs, title: 'OpenAPI Spec', description: 'Document and standardize your APIs using the industry-standard OpenAPI specification. Generate interactive documentation, client SDKs, and maintain consistency across all your API endpoints effortlessly.' },
+  { icon: Lock, title: 'Authentication', description: 'Implement secure, flexible user authentication with support for SSO, OAuth 2.0, MFA, and social logins. Manage user identities confidently with built-in security features and compliance-ready infrastructure.' },
+  { icon: Wrench, title: 'Plugin Ecosystem', description: 'Connect seamlessly to hundreds of your favorite services and APIs through our extensive plugin marketplace. Extend functionality, automate workflows, and integrate third-party tools with just a few clicks.' },
 ]
 
 const internalTools = [
@@ -203,7 +203,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
@@ -212,17 +212,17 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group"
+                className="group w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]"
               >
-                <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border">
+                <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border text-center flex flex-col items-center">
                   <motion.div
                     whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
                     transition={{ duration: 0.4 }}
-                    className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+                    className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors"
                   >
-                    <feature.icon className="w-6 h-6 text-primary" weight="duotone" />
+                    <feature.icon className="w-7 h-7 text-primary" weight="duotone" />
                   </motion.div>
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-2">
+                  <h3 className="font-heading font-semibold text-lg text-foreground mb-3">
                     {feature.title}
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
