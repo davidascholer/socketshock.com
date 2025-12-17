@@ -55,11 +55,18 @@ A stunning, animation-rich SaaS product landing page that showcases development 
 - **Success criteria**: Table is responsive with horizontal scroll on mobile, rows animate on scroll, Professional column visually emphasized, checkmarks/dashes clearly show feature availability
 
 ### Navigation Header
-- **Functionality**: Fixed header with logo and login link
-- **Purpose**: Consistent navigation and branding across all pages
+- **Functionality**: Fixed header with logo, theme toggle, and login link
+- **Purpose**: Consistent navigation, branding, and user preference control across all pages
 - **Trigger**: Present on all pages
-- **Progression**: Always visible → User clicks logo to go home or login to sign in
-- **Success criteria**: Smooth scroll behavior, visible on all pages
+- **Progression**: Always visible → User clicks logo to go home, theme toggle to switch modes, or login to sign in
+- **Success criteria**: Smooth scroll behavior, visible on all pages, theme persists between sessions
+
+### Color Theme Toggle
+- **Functionality**: Sun/Moon toggle button in header that switches between dark mode (default) and light mode
+- **Purpose**: Allows users to choose their preferred viewing mode for comfort
+- **Trigger**: User clicks the theme toggle button in the header
+- **Progression**: User clicks toggle → Theme smoothly transitions → Preference saved via useKV → Header, footer, and cookie banner remain dark in both modes
+- **Success criteria**: Theme toggles correctly, preference persists, light mode uses very light teal backgrounds, header/footer stay dark
 
 ### Footer with Links
 - **Functionality**: Standard SaaS footer with company links, legal pages, social links
@@ -107,14 +114,18 @@ A stunning, animation-rich SaaS product landing page that showcases development 
 The design should evoke feelings of innovation, trustworthiness, and sophistication. Users should feel they're engaging with a cutting-edge technology company that delivers premium results. The dark theme with teal accents creates a modern tech aesthetic.
 
 ## Color Selection
-A bold, modern palette centered on deep charcoal and vibrant teal creates a premium tech aesthetic.
+A bold, modern palette centered on deep charcoal and vibrant teal creates a premium tech aesthetic. Supports both dark mode (default) and light mode with the header and footer always remaining dark.
 
-- **Primary Color**: `oklch(0.62 0.08 180)` (#5f9da0 - Teal) - Represents innovation, reliability, and technology
-- **Secondary Colors**: `oklch(0.20 0.01 0)` (#222222 - Charcoal) - Professional depth, premium feel
+- **Primary Color**: `oklch(0.62 0.08 180)` (#5f9da0 - Teal) - Represents innovation, reliability, and technology (same in both modes)
+- **Secondary Colors**: `oklch(0.20 0.01 260)` (#222222 - Charcoal) - Professional depth, premium feel
 - **Accent Color**: `oklch(0.70 0.12 180)` (Bright Teal) - CTAs and important interactive elements
-- **Background**: `oklch(0.15 0.01 0)` (Near Black) - Deep, immersive dark theme
+- **Dark Mode Background**: `oklch(0.12 0.005 260)` (Near Black) - Deep, immersive dark theme
+- **Light Mode Background**: `oklch(0.97 0.015 180)` (Very Light Teal) - Light, airy feel with teal tint
+- **Dark Mode Foreground**: `oklch(0.95 0.01 260)` (Off White) - High contrast text
+- **Light Mode Foreground**: `oklch(0.20 0.01 260)` (#222222) - Dark text on light backgrounds
 - **Foreground/Background Pairings**:
-  - Background (#151515) with Foreground (#f5f5f5): Ratio 14.2:1 ✓
+  - Dark Mode: Background (#151515) with Foreground (#f5f5f5): Ratio 14.2:1 ✓
+  - Light Mode: Background (light teal) with Foreground (#222222): Ratio 10.5:1 ✓
   - Primary Teal (#5f9da0) on Charcoal (#222222): Ratio 5.1:1 ✓
   - White (#ffffff) on Primary Teal (#5f9da0): Ratio 4.8:1 ✓
 

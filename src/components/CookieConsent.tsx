@@ -13,7 +13,7 @@ export default function CookieConsent({ onAccept }: CookieConsentProps) {
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 100, opacity: 0 }}
       transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-      className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6"
+      className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 dark-section"
     >
       <div className="mx-auto max-w-4xl">
         <div className="glass-card rounded-2xl p-6 glow-effect">

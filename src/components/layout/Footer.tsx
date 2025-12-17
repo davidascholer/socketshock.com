@@ -45,8 +45,8 @@ export default function Footer({ onNavigate }: FooterProps) {
   ]
 
   return (
-    <footer className="relative border-t border-border/50 bg-card/30">
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
+    <footer className="relative border-t border-[oklch(0.28_0.015_260_/_0.5)] dark-section">
+      <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.12_0.005_260)] via-transparent to-transparent pointer-events-none" />
       
       <div className="relative mx-auto max-w-7xl px-4 md:px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
