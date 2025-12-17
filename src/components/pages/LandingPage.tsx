@@ -34,6 +34,147 @@ interface LandingPageProps {
   onNavigate: (page: Page) => void
 }
 
+function ParallaxBackground() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll()
+  
+  const layer1Y = useTransform(scrollYProgress, [0, 0.9], [0, -150])
+  const layer2Y = useTransform(scrollYProgress, [0, 0.9], [0, -250])
+  const layer3Y = useTransform(scrollYProgress, [0, 0.9], [0, -350])
+  const layer4Y = useTransform(scrollYProgress, [0, 0.9], [0, -100])
+  
+  const opacity = useTransform(scrollYProgress, [0.85, 1], [1, 0])
+  
+  const smoothLayer1 = useSpring(layer1Y, { stiffness: 50, damping: 20 })
+  const smoothLayer2 = useSpring(layer2Y, { stiffness: 40, damping: 25 })
+  const smoothLayer3 = useSpring(layer3Y, { stiffness: 30, damping: 30 })
+  const smoothLayer4 = useSpring(layer4Y, { stiffness: 60, damping: 15 })
+
+  return (
+    <motion.div 
+      ref={containerRef}
+      style={{ opacity }}
+      className="fixed inset-0 pointer-events-none overflow-hidden z-0"
+    >
+      <motion.div
+        style={{ y: smoothLayer1 }}
+        className="absolute top-[10%] left-[5%] w-3 h-3 rounded-full bg-primary/20"
+      />
+      <motion.div
+        style={{ y: smoothLayer2 }}
+        className="absolute top-[15%] right-[10%] w-2 h-2 rounded-full bg-accent/30"
+      />
+      <motion.div
+        style={{ y: smoothLayer3 }}
+        className="absolute top-[25%] left-[15%] w-1.5 h-1.5 rounded-full bg-primary/25"
+      />
+      <motion.div
+        style={{ y: smoothLayer1 }}
+        className="absolute top-[35%] right-[20%] w-2.5 h-2.5 rounded-full bg-accent/20"
+      />
+      <motion.div
+        style={{ y: smoothLayer4 }}
+        className="absolute top-[45%] left-[8%] w-2 h-2 rounded-full bg-primary/15"
+      />
+      <motion.div
+        style={{ y: smoothLayer2 }}
+        className="absolute top-[55%] right-[5%] w-3 h-3 rounded-full bg-accent/25"
+      />
+      <motion.div
+        style={{ y: smoothLayer3 }}
+        className="absolute top-[65%] left-[12%] w-1.5 h-1.5 rounded-full bg-primary/20"
+      />
+      <motion.div
+        style={{ y: smoothLayer1 }}
+        className="absolute top-[75%] right-[15%] w-2 h-2 rounded-full bg-accent/15"
+      />
+      
+      <motion.div
+        style={{ y: smoothLayer2 }}
+        className="absolute top-[20%] right-[25%] w-64 h-64 rounded-full bg-gradient-radial from-primary/8 to-transparent blur-3xl"
+      />
+      <motion.div
+        style={{ y: smoothLayer3 }}
+        className="absolute top-[40%] left-[10%] w-80 h-80 rounded-full bg-gradient-radial from-accent/6 to-transparent blur-3xl"
+      />
+      <motion.div
+        style={{ y: smoothLayer1 }}
+        className="absolute top-[60%] right-[8%] w-72 h-72 rounded-full bg-gradient-radial from-primary/5 to-transparent blur-3xl"
+      />
+      <motion.div
+        style={{ y: smoothLayer4 }}
+        className="absolute top-[80%] left-[20%] w-56 h-56 rounded-full bg-gradient-radial from-accent/7 to-transparent blur-3xl"
+      />
+
+      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <motion.line
+          style={{ y: smoothLayer4 }}
+          x1="10%"
+          y1="30%"
+          x2="15%"
+          y2="45%"
+          stroke="oklch(0.62 0.08 180 / 0.08)"
+          strokeWidth="1"
+        />
+        <motion.line
+          style={{ y: smoothLayer2 }}
+          x1="85%"
+          y1="20%"
+          x2="90%"
+          y2="35%"
+          stroke="oklch(0.70 0.12 180 / 0.06)"
+          strokeWidth="1"
+        />
+        <motion.line
+          style={{ y: smoothLayer3 }}
+          x1="5%"
+          y1="60%"
+          x2="12%"
+          y2="72%"
+          stroke="oklch(0.62 0.08 180 / 0.07)"
+          strokeWidth="1"
+        />
+        <motion.line
+          style={{ y: smoothLayer1 }}
+          x1="88%"
+          y1="55%"
+          x2="95%"
+          y2="68%"
+          stroke="oklch(0.70 0.12 180 / 0.05)"
+          strokeWidth="1"
+        />
+      </svg>
+
+      <motion.div
+        style={{ y: smoothLayer2 }}
+        className="absolute top-[18%] left-[3%]"
+      >
+        <div className="w-8 h-8 border border-primary/10 rounded-lg rotate-45" />
+      </motion.div>
+      <motion.div
+        style={{ y: smoothLayer3 }}
+        className="absolute top-[42%] right-[4%]"
+      >
+        <div className="w-6 h-6 border border-accent/10 rounded-full" />
+      </motion.div>
+      <motion.div
+        style={{ y: smoothLayer1 }}
+        className="absolute top-[68%] left-[6%]"
+      >
+        <div className="w-5 h-5 border border-primary/8 rotate-12">
+          <div className="w-full h-full border-t border-l border-primary/8" />
+        </div>
+      </motion.div>
+      <motion.div
+        style={{ y: smoothLayer4 }}
+        className="absolute top-[85%] right-[7%]"
+      >
+        <div className="w-7 h-7 border border-accent/8 rounded-lg -rotate-12" />
+      </motion.div>
+    </motion.div>
+  )
+}
+
 function AnimatedCounter({ value, suffix = '' }: { value: string; suffix?: string }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
@@ -263,6 +404,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
 
   return (
     <div className="relative">
+      <ParallaxBackground />
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 hero-gradient-bg">
         {[...Array(8)].map((_, i) => (
           <FloatingParticle key={i} delay={i * 0.5} x={10 + Math.random() * 80} y={20 + Math.random() * 60} />

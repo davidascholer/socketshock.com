@@ -327,3 +327,7 @@ footer.dark-section .bg-gradient-to-t,
     radial-gradient(ellipse 60% 40% at 80% 60%, oklch(0.70 0.12 180 / 0.1), transparent),
     radial-gradient(ellipse 50% 30% at 20% 80%, oklch(0.55 0.10 200 / 0.08), transparent);
 }
+
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 70%);
+}
