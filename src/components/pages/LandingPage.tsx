@@ -20,6 +20,9 @@ import {
   ArrowRight,
   Quotes,
   Star,
+  Check,
+  Crown,
+  Buildings,
 } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 
@@ -102,6 +105,65 @@ const internalTools = [
   { icon: Kanban, title: 'Project Management', description: 'Comprehensive project tracking with up-to-date progress reports and team collaboration' },
   { icon: PaintBrush, title: 'UI Building Tools', description: 'Drag-and-drop customization tools to create your perfect interface' },
   { icon: Database, title: 'Data Management', description: 'Powerful data solutions for organizing, querying, and analyzing your information' },
+]
+
+const pricingPlans = [
+  {
+    name: 'Starter',
+    description: 'Perfect for individuals and small projects getting started',
+    price: 29,
+    period: 'month',
+    icon: Rocket,
+    popular: false,
+    features: [
+      'Up to 3 projects',
+      '5GB storage',
+      'Basic CI/CD pipeline',
+      'Community support',
+      'Standard analytics',
+      'Email notifications',
+    ],
+    cta: 'Start Free Trial',
+  },
+  {
+    name: 'Professional',
+    description: 'Ideal for growing teams that need more power and flexibility',
+    price: 99,
+    period: 'month',
+    icon: Crown,
+    popular: true,
+    features: [
+      'Unlimited projects',
+      '100GB storage',
+      'Advanced CI/CD with parallelization',
+      'Priority support (24hr response)',
+      'Advanced analytics & reports',
+      'Custom integrations',
+      'Team collaboration tools',
+      'API access',
+    ],
+    cta: 'Get Started',
+  },
+  {
+    name: 'Enterprise',
+    description: 'Custom solutions for large organizations with complex needs',
+    price: null,
+    period: 'month',
+    icon: Buildings,
+    popular: false,
+    features: [
+      'Everything in Professional',
+      'Unlimited storage',
+      'Dedicated infrastructure',
+      'SLA guarantees (99.99% uptime)',
+      '24/7 dedicated support',
+      'Custom security policies',
+      'On-premise deployment option',
+      'Advanced audit logs',
+      'SSO & SAML integration',
+    ],
+    cta: 'Contact Sales',
+  },
 ]
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
@@ -435,6 +497,170 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="pricing" className="relative py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        </div>
+        <div className="absolute top-1/3 right-1/6 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-1/4 left-1/6 w-56 h-56 bg-accent/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '2s' }} />
+
+        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ type: 'spring', damping: 15 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+            >
+              <CurrencyDollar className="w-4 h-4 text-primary" weight="fill" />
+              <span className="text-sm font-medium text-primary">Simple Pricing</span>
+            </motion.div>
+
+            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+              Plans That{' '}
+              <span className="gradient-text">Scale With You</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Transparent pricing with no hidden fees. Start free and upgrade as your needs grow.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {pricingPlans.map((plan, index) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                whileHover={{ y: -8, scale: plan.popular ? 1.02 : 1.01 }}
+                className={`group relative ${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
+              >
+                {plan.popular && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3, type: 'spring' }}
+                    className="absolute -top-4 left-1/2 -translate-x-1/2 z-10"
+                  >
+                    <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs font-semibold shadow-lg">
+                      Most Popular
+                    </div>
+                  </motion.div>
+                )}
+                
+                <div className={`glass-card rounded-3xl p-8 h-full transition-all duration-300 gradient-border relative overflow-hidden ${
+                  plan.popular 
+                    ? 'border-primary/50 glow-effect bg-gradient-to-b from-primary/5 to-transparent' 
+                    : 'hover:border-primary/30'
+                }`}>
+                  {plan.popular && (
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full" />
+                  )}
+                  
+                  <div className="relative">
+                    <div className="flex items-center gap-3 mb-4">
+                      <motion.div
+                        whileHover={{ rotate: 12, scale: 1.1 }}
+                        transition={{ duration: 0.3 }}
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                          plan.popular 
+                            ? 'bg-gradient-to-br from-primary to-accent' 
+                            : 'bg-primary/10'
+                        }`}
+                      >
+                        <plan.icon 
+                          className={`w-6 h-6 ${plan.popular ? 'text-primary-foreground' : 'text-primary'}`} 
+                          weight="duotone" 
+                        />
+                      </motion.div>
+                      <h3 className="font-heading font-bold text-xl text-foreground">
+                        {plan.name}
+                      </h3>
+                    </div>
+
+                    <p className="text-muted-foreground text-sm mb-6 min-h-[40px]">
+                      {plan.description}
+                    </p>
+
+                    <div className="mb-6">
+                      {plan.price !== null ? (
+                        <div className="flex items-baseline gap-1">
+                          <span className="font-heading font-bold text-4xl md:text-5xl gradient-text">
+                            ${plan.price}
+                          </span>
+                          <span className="text-muted-foreground text-sm">
+                            /{plan.period}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="font-heading font-bold text-3xl md:text-4xl gradient-text">
+                          Custom
+                        </div>
+                      )}
+                    </div>
+
+                    <ul className="space-y-3 mb-8">
+                      {plan.features.map((feature, featureIndex) => (
+                        <motion.li
+                          key={feature}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.4 + featureIndex * 0.05 }}
+                          className="flex items-start gap-3"
+                        >
+                          <Check 
+                            className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
+                              plan.popular ? 'text-primary' : 'text-muted-foreground'
+                            }`} 
+                            weight="bold" 
+                          />
+                          <span className="text-foreground/80 text-sm">{feature}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
+
+                    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                      <Button
+                        onClick={() => onNavigate('signin')}
+                        className={`w-full py-6 font-semibold ${
+                          plan.popular
+                            ? 'bg-primary hover:bg-primary/90 text-primary-foreground glow-effect'
+                            : 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border/50'
+                        }`}
+                      >
+                        {plan.cta}
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            className="text-center text-muted-foreground text-sm mt-10"
+          >
+            All plans include a 14-day free trial. No credit card required.
+          </motion.p>
         </div>
       </section>
 
