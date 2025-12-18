@@ -448,7 +448,7 @@ const pricingPlans = [
   {
     name: "Large Scale Enterprise Solutions",
     description:
-      "For analytics dashboards, internal tools, complex systems integrations, and more.",
+      "For analytics dashboards, internal tools, complex systems integration, and more.",
     price: 10000,
     period: "typical pricing*",
 
@@ -700,7 +700,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                 {[
                   { value: "99.9%", label: "Uptime SLA" },
-                  { value: "500K+", label: "Deployments" },
+                  { value: "10K+", label: "Deployments" },
                   { value: "150ms", label: "Avg Response" },
                 ].map((stat, index) => (
                   <motion.div
@@ -1093,8 +1093,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               Plans That <span className="gradient-text">Scale With You</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Transparent pricing with no hidden fees. Start free and upgrade as
-              your needs grow.
+              Transparent, competitive, and straightforward pricing to fit your development needs.
             </p>
           </motion.div>
 
@@ -1465,8 +1464,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="mx-auto flex flex-col gap-4">
         <h1 className="text-2xl text-center font-semibold mt-24 mb-8p-2 max-w-4xl mx-auto text-muted-foreground ">
           We also offer graphic design services to complement your development
-          projects. From logos to full branding packages, our design team is here
-          to help your brand stand out.
+          projects. From logos to efficient image optimization and quality, our team is here
+          to help you with your visual branding needs.
         </h1>
         <ParallaxScrollComponent />
       </section>
