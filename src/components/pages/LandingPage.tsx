@@ -632,9 +632,10 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               variants={itemVariants}
               className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
             >
-              The complete platform for modern development teams. From backend
-              services to beautiful UIs, we've got everything you need to build,
-              test, and deploy at scale.
+              Accelerate your development process with our expert team, cutting-edge
+              tools, and seamless integrations. From concept to deployment, we help
+              you build, test, and ship high-quality applications faster than ever
+              before.
             </motion.p>
 
             <motion.div
