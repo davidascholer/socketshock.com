@@ -32,6 +32,10 @@ import {
   Buildings,
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
+import CodeBlockComponent from "../CodeBlockComponent";
+import WorldMapComponent from "../WorldMapComponent";
+import MacbookScrollComponent from "../MacbookScrollComponent";
+import ParallaxScrollComponent from "../ParallaxScrollComponent";
 
 type Page = "home" | "signin" | "privacy" | "terms";
 
@@ -260,7 +264,7 @@ const testimonials = [
     avatar: "AB",
     rating: 5,
     quote:
-      "Their work actually was astounding. I've worked with other front end, back end, or UI/UX developers. SocketShock's worked so quickly, and with so much easy, I didn't know what to say. They not only worked fast, but their output was great. I cannot overstate how capable they are. They made work that was crushing some of my other developers look like a cake walk.",
+      "Their work actually was astounding. I've worked with other front end, back end, or UI/UX developers. SocketShock worked so quickly, and with so much ease, I didn't know what to say. They not only worked fast, but their output was great. I cannot overstate how capable they are. They made work that was crushing some of my other developers look like a cake walk.",
   },
   {
     name: "Oshawa",
@@ -404,61 +408,118 @@ const internalTools = [
 
 const pricingPlans = [
   {
-    name: "Starter",
-    description: "Perfect for individuals and small projects getting started",
-    price: 29,
-    period: "month",
+    name: "Static Client Side Applications",
+    description: "Perfect for individuals and small projects getting started.",
+    price: 2000,
+    period: "typical pricing*",
+    // period: "average shipment in 2-5 days",
     icon: Rocket,
     popular: false,
     features: [
-      "Up to 3 projects",
-      "5GB storage",
-      "Basic CI/CD pipeline",
-      "Community support",
-      "Standard analytics",
-      "Email notifications",
+      "Static site generation",
+      "Responsive design",
+      "Basic SEO setup",
+      "Access to internal tools",
+      "Graphic design integration",
+      "Performance optimization",
     ],
-    cta: "Start Free Trial",
+    cta: "Inquire About Static Applications",
   },
   {
-    name: "Professional",
-    description: "Ideal for growing teams that need more power and flexibility",
-    price: 99,
-    period: "month",
-    icon: Crown,
-    popular: true,
-    features: [
-      "Unlimited projects",
-      "100GB storage",
-      "Advanced CI/CD with parallelization",
-      "Priority support (24hr response)",
-      "Advanced analytics & reports",
-      "Custom integrations",
-      "Team collaboration tools",
-      "API access",
-    ],
-    cta: "Get Started",
-  },
-  {
-    name: "Enterprise",
-    description: "Custom solutions for large organizations with complex needs",
-    price: null,
-    period: "month",
-    icon: Buildings,
+    name: "Full Stack Applications",
+    description:
+      "For growing software needs that require an app, a server, and managed databases.",
+    price: 5000,
+    period: "typical pricing*",
+
+    // period: "average shipment in 1-3 weeks",
+    icon: Rocket,
     popular: false,
     features: [
-      "Everything in Professional",
-      "Unlimited storage",
-      "Dedicated infrastructure",
-      "SLA guarantees (99.99% uptime)",
-      "24/7 dedicated support",
-      "Custom security policies",
-      "On-premise deployment option",
-      "Advanced audit logs",
-      "SSO & SAML integration",
+      "All Static Client Side features",
+      "SEO optimization",
+      "Backend API development",
+      "Database integration",
+      "User authentication",
+      "CI/CD pipeline setup",
     ],
-    cta: "Contact Sales",
+    cta: "Inquire About Full Stack Systems",
   },
+  {
+    name: "Large Scale Enterprise Solutions",
+    description:
+      "For analytics dashboards, internal tools, complex systems integrations, and more.",
+    price: 10000,
+    period: "typical pricing*",
+
+    // period: "average shipment in 2-5 weeks",
+    icon: Rocket,
+    popular: false,
+    features: [
+      "All Full Stack Application features",
+      "Custom system architecture",
+      "Advanced security features",
+      "Scalability planning",
+      "Third-party integrations",
+      "Dedicated support",
+    ],
+    cta: "Inquire About Enterprise Solutions",
+  },
+  // {
+  //   name: "Starter",
+  //   description: "Perfect for individuals and small projects getting started",
+  //   price: 29,
+  //   period: "month",
+  //   icon: Rocket,
+  //   popular: false,
+  //   features: [
+  //     "Up to 3 projects",
+  //     "5GB storage",
+  //     "Basic CI/CD pipeline",
+  //     "Community support",
+  //     "Standard analytics",
+  //     "Email notifications",
+  //   ],
+  //   cta: "Start Free Trial",
+  // },
+  // {
+  //   name: "Professional",
+  //   description: "Ideal for growing teams that need more power and flexibility",
+  //   price: 99,
+  //   period: "month",
+  //   icon: Crown,
+  //   popular: true,
+  //   features: [
+  //     "Unlimited projects",
+  //     "100GB storage",
+  //     "Advanced CI/CD with parallelization",
+  //     "Priority support (24hr response)",
+  //     "Advanced analytics & reports",
+  //     "Custom integrations",
+  //     "Team collaboration tools",
+  //     "API access",
+  //   ],
+  //   cta: "Get Started",
+  // },
+  // {
+  //   name: "Enterprise",
+  //   description: "Custom solutions for large organizations with complex needs",
+  //   price: null,
+  //   period: "month",
+  //   icon: Buildings,
+  //   popular: false,
+  //   features: [
+  //     "Everything in Professional",
+  //     "Unlimited storage",
+  //     "Dedicated infrastructure",
+  //     "SLA guarantees (99.99% uptime)",
+  //     "Custom security policies",
+  //     "On-premise deployment option",
+  //     "Advanced audit logs",
+  //     "SSO & SAML integration",
+  //   ],
+  //   cta: "Contact Sales",
+  // },
 ];
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
@@ -635,12 +696,11 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               whileHover={{ rotateX: 2, rotateY: -2, scale: 1.01 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                 {[
                   { value: "99.9%", label: "Uptime SLA" },
                   { value: "500K+", label: "Deployments" },
                   { value: "150ms", label: "Avg Response" },
-                  { value: "24/7", label: "Support" },
                 ].map((stat, index) => (
                   <motion.div
                     key={stat.label}
@@ -685,174 +745,6 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             />
           </motion.div>
         </motion.div>
-      </section>
-
-      <section id="features" className="relative py-24 md:py-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/50 to-transparent pointer-events-none" />
-
-        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <motion.h2
-              className="font-heading font-bold text-3xl md:text-5xl mb-4"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Everything You Need to{" "}
-              <span className="gradient-text">Build & Scale</span>
-            </motion.h2>
-            <motion.p
-              className="text-muted-foreground text-lg max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              A comprehensive suite of tools and services designed for modern
-              development workflows
-            </motion.p>
-          </motion.div>
-
-          <div className="flex flex-wrap justify-center gap-6">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 50, rotateX: -10 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.03 }}
-                whileHover={{
-                  y: -12,
-                  scale: 1.03,
-                  rotateY: 5,
-                  transition: { duration: 0.2 },
-                }}
-                className="group w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] perspective-1000"
-              >
-                <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border text-center flex flex-col items-center relative overflow-hidden">
-                  <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <motion.div
-                    whileHover={{ rotate: [0, -10, 10, -5, 5, 0], scale: 1.15 }}
-                    transition={{ duration: 0.5 }}
-                    className="relative w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors"
-                  >
-                    <feature.icon
-                      className="w-7 h-7 text-primary"
-                      weight="duotone"
-                    />
-                    <motion.div
-                      className="absolute inset-0 rounded-xl bg-primary/20"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileHover={{ scale: 1.5, opacity: 0 }}
-                      transition={{ duration: 0.4 }}
-                    />
-                  </motion.div>
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-3 relative z-10">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed relative z-10">
-                    {feature.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              whileInView={{ scale: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", damping: 12 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
-            >
-              <Wrench className="w-4 h-4 text-accent" weight="fill" />
-              <span className="text-sm font-medium text-accent">
-                Internal Tools
-              </span>
-            </motion.div>
-
-            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-              Powerful <span className="gradient-text">Internal Tools</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Take control of your projects with our suite of internal tools
-              designed for maximum efficiency
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {internalTools.map((tool, index) => (
-              <motion.div
-                key={tool.title}
-                initial={{
-                  opacity: 0,
-                  x: index % 2 === 0 ? -80 : 80,
-                  rotateY: index % 2 === 0 ? -15 : 15,
-                }}
-                whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{
-                  duration: 0.7,
-                  delay: index * 0.1,
-                  ease: "easeOut",
-                }}
-                whileHover={{ scale: 1.03, y: -5 }}
-                className="group perspective-1000"
-              >
-                <div className="glass-card rounded-3xl p-8 h-full transition-all duration-300 hover:border-primary/40 gradient-border glow-effect relative overflow-hidden">
-                  <motion.div
-                    className="absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-2xl"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  />
-                  <div className="flex items-start gap-6 relative z-10">
-                    <motion.div
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                      className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0"
-                    >
-                      <tool.icon
-                        className="w-8 h-8 text-primary"
-                        weight="duotone"
-                      />
-                    </motion.div>
-                    <div>
-                      <h3 className="font-heading font-semibold text-xl text-foreground mb-3">
-                        {tool.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {tool.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
       </section>
 
       <section className="relative py-24 md:py-32 overflow-hidden">
@@ -987,6 +879,181 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             ))}
           </div>
         </div>
+      </section>
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              whileInView={{ scale: 1, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ type: "spring", damping: 12 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
+            >
+              <Wrench className="w-4 h-4 text-accent" weight="fill" />
+              <span className="text-sm font-medium text-accent">
+                Internal Tools
+              </span>
+            </motion.div>
+
+            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+              Powerful <span className="gradient-text">Internal Tools</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Take control of your projects with our suite of internal tools
+              designed for maximum efficiency
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {internalTools.map((tool, index) => (
+              <motion.div
+                key={tool.title}
+                initial={{
+                  opacity: 0,
+                  x: index % 2 === 0 ? -80 : 80,
+                  rotateY: index % 2 === 0 ? -15 : 15,
+                }}
+                whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{
+                  duration: 0.7,
+                  delay: index * 0.1,
+                  ease: "easeOut",
+                }}
+                whileHover={{ scale: 1.03, y: -5 }}
+                className="group perspective-1000"
+              >
+                <div className="glass-card rounded-3xl p-8 h-full transition-all duration-300 hover:border-primary/40 gradient-border glow-effect relative overflow-hidden">
+                  <motion.div
+                    className="absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-2xl"
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  />
+                  <div className="flex items-start gap-6 relative z-10">
+                    <motion.div
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0"
+                    >
+                      <tool.icon
+                        className="w-8 h-8 text-primary"
+                        weight="duotone"
+                      />
+                    </motion.div>
+                    <div>
+                      <h3 className="font-heading font-semibold text-xl text-foreground mb-3">
+                        {tool.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {tool.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
+        <MacbookScrollComponent />
+      </section>
+
+      <section id="features" className="relative py-24 md:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/50 to-transparent pointer-events-none" />
+
+        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              className="font-heading font-bold text-3xl md:text-5xl mb-4"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              Everything You Need to{" "}
+              <span className="gradient-text">Build & Scale</span>
+            </motion.h2>
+            <motion.p
+              className="text-muted-foreground text-lg max-w-2xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              A comprehensive suite of tools and services designed for modern
+              development workflows
+            </motion.p>
+          </motion.div>
+
+          <div className="flex flex-wrap justify-center gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 50, rotateX: -10 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index * 0.03 }}
+                whileHover={{
+                  y: -12,
+                  scale: 1.03,
+                  rotateY: 5,
+                  transition: { duration: 0.2 },
+                }}
+                className="group w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] perspective-1000"
+              >
+                <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border text-center flex flex-col items-center relative overflow-hidden">
+                  <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <motion.div
+                    whileHover={{ rotate: [0, -10, 10, -5, 5, 0], scale: 1.15 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors"
+                  >
+                    <feature.icon
+                      className="w-7 h-7 text-primary"
+                      weight="duotone"
+                    />
+                    <motion.div
+                      className="absolute inset-0 rounded-xl bg-primary/20"
+                      initial={{ scale: 0, opacity: 0 }}
+                      whileHover={{ scale: 1.5, opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                    />
+                  </motion.div>
+                  <h3 className="font-heading font-semibold text-lg text-foreground mb-3 relative z-10">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed relative z-10">
+                    {feature.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
+        <WorldMapComponent />
       </section>
 
       <section id="pricing" className="relative py-24 md:py-32 overflow-hidden">
@@ -1168,10 +1235,11 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             transition={{ delay: 0.6 }}
             className="text-center text-muted-foreground text-sm mt-10"
           >
-            All plans include a 14-day free trial. No credit card required.
+            * Average costs. Actual cost may vary. All prices are in USD. Taxes
+            may apply based on your location.
           </motion.p>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -1254,12 +1322,6 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                         starter: "1K req/hr",
                         pro: "10K req/hr",
                         enterprise: "Unlimited",
-                      },
-                      {
-                        feature: "Support",
-                        starter: "Community",
-                        pro: "24hr Priority",
-                        enterprise: "24/7 Dedicated",
                       },
                       {
                         feature: "Custom Integrations",
@@ -1391,8 +1453,21 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                 </table>
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
+      </section>
+
+      <section className="mx-auto flex flex-col gap-4">
+        <CodeBlockComponent />
+      </section>
+
+      <section className="mx-auto flex flex-col gap-4">
+        <h1 className="text-2xl text-center font-semibold mt-24 mb-8p-2 max-w-4xl mx-auto text-muted-foreground ">
+          We also offer graphic design services to complement your development
+          projects. From logos to full branding packages, our design team is here
+          to help your brand stand out.
+        </h1>
+        <ParallaxScrollComponent />
       </section>
 
       <section className="relative py-24 md:py-32">
@@ -1434,8 +1509,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              Join thousands of teams who have already accelerated their
-              development workflow with SocketShock
+              Spark your next project with SocketShock and let you ideas come to
+              light.
             </motion.p>
 
             <motion.div

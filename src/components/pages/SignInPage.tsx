@@ -248,10 +248,9 @@ export default function SignInPage() {
 
               <div className="space-y-4">
                 {[
-                  'Dedicated project manager',
+                  'Dedicated Agile project management',
                   'Weekly progress reports',
-                  'Unlimited revisions',
-                  '24/7 priority support',
+                  'Client or team collaborated design and prototyping',
                 ].map((benefit, index) => (
                   <motion.div
                     key={benefit}

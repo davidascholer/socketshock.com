@@ -29,8 +29,7 @@ Our cookies are used solely for analytical purposes. We do not sell, trade, or o
       content: `We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include:
 • Encryption of data in transit and at rest
 • Regular security assessments
-• Access controls and authentication
-• Secure data centers with 24/7 monitoring`,
+• Access controls and authentication`,
     },
     {
       title: 'Your Privacy Rights',
