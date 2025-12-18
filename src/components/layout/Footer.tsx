@@ -62,7 +62,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                   <Lightning className="w-5 h-5 text-primary" weight="fill" />
                 </div>
                 <span className="font-heading font-bold text-xl text-foreground">
-                  NexusFlow
+                  SocketShock
                 </span>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
@@ -132,7 +132,7 @@ export default function Footer({ onNavigate }: FooterProps) {
           className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4"
         >
           <p className="text-muted-foreground text-sm">
-            © {currentYear} NexusFlow. All rights reserved.
+            © {currentYear} SocketShock. All rights reserved.
           </p>
           <div className="flex gap-6">
             <button

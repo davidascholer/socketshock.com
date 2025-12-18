@@ -65,7 +65,7 @@ Your continued use of our website after any changes indicates your acceptance of
       title: 'Contact Us',
       content: `If you have any questions about this Privacy Policy or our data practices, please contact us at:
 
-Email: privacy@nexusflow.dev
+Email: privacy@socketshock.com
 Address: 123 Innovation Way, Tech City, TC 12345
 
 We will respond to your inquiry within 30 business days.`,
@@ -111,7 +111,7 @@ We will respond to your inquiry within 30 business days.`,
         >
           <div className="prose prose-invert max-w-none">
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              At NexusFlow, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
+              At SocketShock, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
             </p>
 
             <div className="space-y-10">

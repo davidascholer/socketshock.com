@@ -7,13 +7,13 @@ export default function TermsPage() {
   const sections = [
     {
       title: '1. Acceptance of Terms',
-      content: `By accessing or using NexusFlow's services, website, or any related applications (collectively, the "Services"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use our Services.
+      content: `By accessing or using SocketShock's services, website, or any related applications (collectively, the "Services"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use our Services.
 
 These Terms apply to all visitors, users, and others who access or use the Services. By using the Services, you represent that you are at least 18 years of age and have the legal capacity to enter into these Terms.`,
     },
     {
       title: '2. Description of Services',
-      content: `NexusFlow provides a software-as-a-service platform for development teams, including but not limited to:
+      content: `SocketShock provides a software-as-a-service platform for development teams, including but not limited to:
 • Backend service development and hosting
 • Frontend development tools and frameworks
 • API creation and management
@@ -49,11 +49,11 @@ We reserve the right to investigate and take appropriate action against any viol
     },
     {
       title: '5. Intellectual Property',
-      content: `The Services and all content, features, and functionality are owned by NexusFlow and are protected by copyright, trademark, and other intellectual property laws.
+      content: `The Services and all content, features, and functionality are owned by SocketShock and are protected by copyright, trademark, and other intellectual property laws.
 
 You retain ownership of any content you submit through the Services. By submitting content, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, and display such content in connection with providing the Services.
 
-Our name, logo, and all related names, logos, and product names are trademarks of NexusFlow. You may not use these marks without our prior written permission.`,
+Our name, logo, and all related names, logos, and product names are trademarks of SocketShock. You may not use these marks without our prior written permission.`,
     },
     {
       title: '6. Payment and Billing',
@@ -77,7 +77,7 @@ Service credits may be available for downtime exceeding our SLA commitments, as 
     },
     {
       title: '8. Limitation of Liability',
-      content: `TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEXUSFLOW SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR BUSINESS OPPORTUNITIES.
+      content: `TO THE MAXIMUM EXTENT PERMITTED BY LAW, SocketShock SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR BUSINESS OPPORTUNITIES.
 
 Our total liability for any claims arising from your use of the Services shall not exceed the amount you paid us in the twelve months preceding the claim.`,
     },
@@ -89,7 +89,7 @@ We do not warrant that the Services will be uninterrupted, error-free, or comple
     },
     {
       title: '10. Indemnification',
-      content: `You agree to indemnify, defend, and hold harmless NexusFlow and its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:
+      content: `You agree to indemnify, defend, and hold harmless SocketShock and its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:
 • Your use of the Services
 • Your violation of these Terms
 • Your violation of any third-party rights
@@ -124,7 +124,7 @@ Your continued use of the Services after changes become effective constitutes ac
       title: '14. Contact Information',
       content: `For questions about these Terms of Service, please contact us at:
 
-Email: legal@nexusflow.dev
+Email: legal@SocketShock.dev
 Address: 123 Innovation Way, Tech City, TC 12345
 Phone: (555) 123-4567
 
@@ -171,7 +171,7 @@ We will respond to inquiries within 5 business days.`,
         >
           <div className="prose prose-invert max-w-none">
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Welcome to NexusFlow. Please read these Terms of Service carefully before using our platform. These terms govern your access to and use of our services, including our website, APIs, and all associated applications.
+              Welcome to SocketShock. Please read these Terms of Service carefully before using our platform. These terms govern your access to and use of our services, including our website, APIs, and all associated applications.
             </p>
 
             <div className="space-y-10">

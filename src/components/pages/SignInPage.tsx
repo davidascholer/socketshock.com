@@ -139,7 +139,7 @@ export default function SignInPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            Thank you for your interest in NexusFlow. Our team will review your application and get back to you within 24-48 hours.
+            Thank you for your interest in SocketShock. Our team will review your application and get back to you within 24-48 hours.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -211,7 +211,7 @@ export default function SignInPage() {
                   <Lightning className="w-6 h-6 text-primary" weight="fill" />
                 </motion.div>
                 <span className="font-heading font-bold text-2xl text-foreground">
-                  NexusFlow
+                  SocketShock
                 </span>
               </div>
 
