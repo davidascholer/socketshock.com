@@ -670,7 +670,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   />
                 </Button>
               </motion.div>
-              <motion.div
+              {/* <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -681,7 +681,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                 >
                   Watch Demo
                 </Button>
-              </motion.div>
+              </motion.div> */}
             </motion.div>
           </motion.div>
 
