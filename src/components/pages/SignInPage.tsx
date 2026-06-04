@@ -210,7 +210,7 @@ export default function SignInPage() {
                 >
                   <Lightning className="w-6 h-6 text-primary" weight="fill" />
                 </motion.div>
-                <span className="font-heading font-bold text-2xl text-foreground">
+                <span className="brand-wordmark font-bold text-2xl text-foreground">
                   SocketShock
                 </span>
               </div>

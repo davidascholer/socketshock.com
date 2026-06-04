@@ -139,6 +139,11 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(135deg, oklch(0.62 0.08 180 / 0.6), oklch(0.70 0.06 180 / 0.3));
 }
 
+.brand-wordmark {
+  font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+  letter-spacing: 0.03em;
+}
+
 .glow-effect {
   box-shadow: 0 0 40px oklch(0.62 0.08 180 / 0.15), 0 0 80px oklch(0.62 0.08 180 / 0.08);
 }

@@ -5,7 +5,14 @@ import {
   useSpring,
   useInView,
 } from "framer-motion";
-import { useRef, useEffect, useState, lazy, Suspense } from "react";
+import {
+  useRef,
+  useEffect,
+  useState,
+  lazy,
+  Suspense,
+  type ReactNode,
+} from "react";
 import {
   Lightning,
   Rocket,
@@ -312,6 +319,50 @@ function SectionLoader({
   );
 }
 
+function ProgressiveSection({
+  sectionIndex,
+  unlockedSection,
+  onReady,
+  heightClass,
+  label,
+  children,
+}: {
+  sectionIndex: number;
+  unlockedSection: number;
+  onReady: (index: number) => void;
+  heightClass: string;
+  label: string;
+  children: ReactNode;
+}) {
+  const markerRef = useRef<HTMLDivElement>(null);
+  const canLoad = sectionIndex <= unlockedSection;
+  const isLoaded = sectionIndex < unlockedSection;
+  const isInView = useInView(markerRef, {
+    once: true,
+    margin: "0px 0px 35% 0px",
+  });
+
+  useEffect(() => {
+    if (canLoad && !isLoaded && isInView) {
+      onReady(sectionIndex);
+    }
+  }, [canLoad, isInView, isLoaded, onReady, sectionIndex]);
+
+  if (isLoaded) {
+    return <div ref={markerRef}>{children}</div>;
+  }
+
+  return (
+    <div ref={markerRef}>
+      {canLoad ? (
+        <SectionLoader heightClass={heightClass} label={label} />
+      ) : (
+        <div className={heightClass} aria-hidden="true" />
+      )}
+    </div>
+  );
+}
+
 const testimonials = [
   {
     name: "Austin",
@@ -578,6 +629,12 @@ const pricingPlans = [
 ];
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
+  const [unlockedSection, setUnlockedSection] = useState(0);
+
+  const handleSectionReady = (index: number) => {
+    setUnlockedSection((current) => Math.max(current, index + 1));
+  };
+
   return (
     <div className="relative">
       <ParallaxBackground />
@@ -647,10 +704,15 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         </div>
       </section>
 
-      <div
-        style={{ contentVisibility: "auto", containIntrinsicSize: "5000px" }}
-      >
-        <section className="relative py-24 md:py-32 overflow-hidden">
+      <div>
+        <ProgressiveSection
+          sectionIndex={0}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[980px]"
+          label="customer stories"
+        >
+          <section className="relative py-24 md:py-32 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
           <motion.div
             className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"
@@ -788,8 +850,17 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               ))}
             </div>
           </div>
-        </section>
-        <section className="relative py-24 md:py-32 overflow-hidden">
+          </section>
+        </ProgressiveSection>
+
+        <ProgressiveSection
+          sectionIndex={1}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[760px]"
+          label="internal tools"
+        >
+          <section className="relative py-24 md:py-32 overflow-hidden">
           <div className="absolute inset-0">
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -875,19 +946,35 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               ))}
             </div>
           </div>
-        </section>
+          </section>
+        </ProgressiveSection>
 
-        <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
-          <Suspense
-            fallback={
-              <SectionLoader heightClass="h-[600px]" label="the overview" />
-            }
-          >
-            <MacbookScrollComponent />
-          </Suspense>
-        </section>
+        <ProgressiveSection
+          sectionIndex={2}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[600px]"
+          label="the overview"
+        >
+          <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
+            <Suspense
+              fallback={
+                <SectionLoader heightClass="h-[600px]" label="the overview" />
+              }
+            >
+              <MacbookScrollComponent />
+            </Suspense>
+          </section>
+        </ProgressiveSection>
 
-        <section id="features" className="relative py-24 md:py-32">
+        <ProgressiveSection
+          sectionIndex={3}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[980px]"
+          label="feature highlights"
+        >
+          <section id="features" className="relative py-24 md:py-32">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/50 to-transparent pointer-events-none" />
 
           <div className="relative mx-auto max-w-7xl px-4 md:px-6">
@@ -968,20 +1055,38 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               ))}
             </div>
           </div>
-        </section>
+          </section>
+        </ProgressiveSection>
 
-        <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
-          <Suspense
-            fallback={<SectionLoader heightClass="h-[400px]" label="the map" />}
-          >
-            <WorldMapComponent />
-          </Suspense>
-        </section>
-
-        <section
-          id="pricing"
-          className="relative py-24 md:py-32 overflow-hidden"
+        <ProgressiveSection
+          sectionIndex={4}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[420px]"
+          label="the map"
         >
+          <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
+            <Suspense
+              fallback={
+                <SectionLoader heightClass="h-[400px]" label="the map" />
+              }
+            >
+              <WorldMapComponent />
+            </Suspense>
+          </section>
+        </ProgressiveSection>
+
+        <ProgressiveSection
+          sectionIndex={5}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[1300px]"
+          label="pricing"
+        >
+          <section
+            id="pricing"
+            className="relative py-24 md:py-32 overflow-hidden"
+          >
           <div className="absolute inset-0">
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -1383,34 +1488,58 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
           </motion.div> */}
           </div>
-        </section>
+          </section>
+        </ProgressiveSection>
 
-        <section className="mx-auto flex flex-col gap-4">
-          <Suspense
-            fallback={
-              <SectionLoader heightClass="h-[300px]" label="the code block" />
-            }
-          >
-            <CodeBlockComponent />
-          </Suspense>
-        </section>
+        <ProgressiveSection
+          sectionIndex={6}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[340px]"
+          label="the code block"
+        >
+          <section className="mx-auto flex flex-col gap-4">
+            <Suspense
+              fallback={
+                <SectionLoader heightClass="h-[300px]" label="the code block" />
+              }
+            >
+              <CodeBlockComponent />
+            </Suspense>
+          </section>
+        </ProgressiveSection>
 
-        <section className="mx-auto flex flex-col gap-4">
-          <h1 className="text-2xl text-center font-semibold mt-24 mb-8p-2 max-w-4xl mx-auto text-muted-foreground ">
-            We also offer graphic design services to complement your development
-            projects. From logos to efficient image optimization and quality,
-            our team is here to help you with your visual branding needs.
-          </h1>
-          <Suspense
-            fallback={
-              <SectionLoader heightClass="h-[400px]" label="the gallery" />
-            }
-          >
-            <ParallaxScrollComponent />
-          </Suspense>
-        </section>
+        <ProgressiveSection
+          sectionIndex={7}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[520px]"
+          label="the gallery"
+        >
+          <section className="mx-auto flex flex-col gap-4">
+            <h1 className="text-2xl text-center font-semibold mt-24 mb-8p-2 max-w-4xl mx-auto text-muted-foreground ">
+              We also offer graphic design services to complement your development
+              projects. From logos to efficient image optimization and quality,
+              our team is here to help you with your visual branding needs.
+            </h1>
+            <Suspense
+              fallback={
+                <SectionLoader heightClass="h-[400px]" label="the gallery" />
+              }
+            >
+              <ParallaxScrollComponent />
+            </Suspense>
+          </section>
+        </ProgressiveSection>
 
-        <section className="relative py-24 md:py-32">
+        <ProgressiveSection
+          sectionIndex={8}
+          unlockedSection={unlockedSection}
+          onReady={handleSectionReady}
+          heightClass="h-[560px]"
+          label="the final call-to-action"
+        >
+          <section className="relative py-24 md:py-32">
           <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent pointer-events-none" />
 
           <div className="relative mx-auto max-w-4xl px-4 md:px-6 text-center">
@@ -1488,7 +1617,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               </motion.div>
             </motion.div>
           </div>
-        </section>
+          </section>
+        </ProgressiveSection>
       </div>
     </div>
   );

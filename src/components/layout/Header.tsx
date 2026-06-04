@@ -23,23 +23,15 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
         type: "spring",
         stiffness: 100,
       }}
-      className="fixed top-0 left-0 right-0 z-40 dark-section header-fixed"
+      className="fixed top-0 left-0 right-0 z-40 header-fixed"
     >
       <div className="w-full">
         <motion.div
-          className="glass-card px-6 py-3 relative overflow-hidden"
+          className="px-6 py-3 relative overflow-hidden"
           initial={{ scale: 0.95 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5"
-            animate={{
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            style={{ backgroundSize: "200% 100%" }}
-          />
           <div className="flex items-center justify-between relative z-10">
             <motion.button
               onClick={() => onNavigate("home")}
@@ -59,7 +51,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
                 />
               </motion.div>
               <motion.span
-                className="font-heading font-bold text-xl text-[oklch(0.95_0.01_260)]"
+                className="brand-wordmark font-bold text-xl text-[oklch(0.95_0.01_260)]"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}

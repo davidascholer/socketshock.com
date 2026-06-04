@@ -67,7 +67,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
                   <Lightning className="w-5 h-5 text-primary" weight="fill" />
                 </div>
-                <span className="font-heading font-bold text-xl text-foreground">
+                <span className="brand-wordmark font-bold text-xl text-foreground">
                   SocketShock
                 </span>
               </div>
