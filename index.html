@@ -21,9 +21,70 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="/src/main.css" rel="stylesheet" />
+    <style>
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        transition: opacity 0.5s ease;
+      }
+      #splash.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #splash svg {
+        width: 56px;
+        height: 56px;
+        animation: splash-pulse 1.8s ease-in-out infinite;
+      }
+      #splash-text {
+        font-family: 'Inter', 'Space Grotesk', sans-serif;
+        font-size: 15px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.55);
+        animation: splash-pulse 1.8s ease-in-out infinite;
+      }
+      #splash-bar-track {
+        width: 160px;
+        height: 2px;
+        background: rgba(255,255,255,0.12);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      #splash-bar {
+        height: 100%;
+        width: 0%;
+        background: oklch(0.62 0.08 180);
+        border-radius: 2px;
+        animation: splash-bar 1.8s ease-in-out infinite;
+      }
+      @keyframes splash-pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+      @keyframes splash-bar {
+        0% { width: 0%; }
+        60% { width: 85%; }
+        100% { width: 100%; }
+      }
+    </style>
 </head>
 
 <body>
+    <div id="splash" aria-label="Loading" role="status">
+      <svg viewBox="0 0 275 308" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <image href="/images/socketshock_filled.svg" width="275" height="308" />
+      </svg>
+      <div id="splash-text">Loading your experience</div>
+      <div id="splash-bar-track"><div id="splash-bar"></div></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 </body>

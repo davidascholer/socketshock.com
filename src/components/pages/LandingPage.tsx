@@ -5,7 +5,7 @@ import {
   useSpring,
   useInView,
 } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, lazy, Suspense } from "react";
 import {
   Lightning,
   Rocket,
@@ -32,10 +32,12 @@ import {
   Buildings,
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
-import CodeBlockComponent from "../CodeBlockComponent";
-import WorldMapComponent from "../WorldMapComponent";
-import MacbookScrollComponent from "../MacbookScrollComponent";
-import ParallaxScrollComponent from "../ParallaxScrollComponent";
+const CodeBlockComponent = lazy(() => import("../CodeBlockComponent"));
+const WorldMapComponent = lazy(() => import("../WorldMapComponent"));
+const MacbookScrollComponent = lazy(() => import("../MacbookScrollComponent"));
+const ParallaxScrollComponent = lazy(
+  () => import("../ParallaxScrollComponent"),
+);
 
 type Page = "home" | "signin" | "privacy" | "terms";
 
@@ -523,723 +525,590 @@ const pricingPlans = [
 ];
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
-  const heroRef = useRef(null);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" as const },
-    },
-  };
-
-  const letterVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.03, duration: 0.5, ease: "easeOut" as const },
-    }),
-  };
-
   return (
     <div className="relative">
       <ParallaxBackground />
-      <section
-        ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 hero-gradient-bg"
-      >
-        {[...Array(8)].map((_, i) => (
-          <FloatingParticle
-            key={i}
-            delay={i * 0.5}
-            x={10 + Math.random() * 80}
-            y={20 + Math.random() * 60}
-          />
-        ))}
-
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 hero-gradient-bg">
         <div className="absolute inset-0">
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-morph-blob"
-            animate={{
-              x: [0, 50, 0],
-              y: [0, -30, 0],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-morph-blob"
-            animate={{
-              x: [0, -40, 0],
-              y: [0, 40, 0],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
         </div>
 
-        <motion.div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 text-center">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.div
-              variants={itemVariants}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 overflow-hidden relative"
+        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 overflow-hidden relative">
+            <div className="absolute inset-0 animate-shimmer" />
+            <Lightning className="w-4 h-4 text-primary" weight="fill" />
+            <span className="text-sm font-medium text-primary relative z-10">
+              Launching the future of development
+            </span>
+          </div>
+
+          <h1 className="font-heading font-bold text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight flex flex-wrap justify-center items-center gap-2">
+            <span className="inline-block overflow-hidden">Build Faster.</span>
+            <span className="gradient-text animate-text-glow">
+              Ship Smarter.
+            </span>
+          </h1>
+
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+            Accelerate your development process with our expert team,
+            cutting-edge tools, and seamless integrations. From concept to
+            deployment, we help you build, test, and ship high-quality
+            applications faster than ever before.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => onNavigate("signin")}
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg glow-effect gap-2 relative overflow-hidden group"
             >
-              <div className="absolute inset-0 animate-shimmer" />
-              <Lightning className="w-4 h-4 text-primary" weight="fill" />
-              <span className="text-sm font-medium text-primary relative z-10">
-                Launching the future of development
+              <span className="relative z-10 flex items-center gap-2">
+                Get Started
+                <ArrowRight className="w-5 h-5" />
               </span>
-            </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            </Button>
+          </div>
 
-            <motion.h1 className="font-heading font-bold text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight flex flex-wrap justify-center items-center gap-2">
-              <span className="inline-block overflow-hidden">
-                {"Build Faster.".split("").map((char, i) => (
-                  <motion.span
-                    key={i}
-                    custom={i}
-                    variants={letterVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="inline-block"
-                  >
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
-                ))}
-              </span>
-              <span className="gradient-text animate-text-glow ">
-                Ship Smarter.
-              </span>
-            </motion.h1>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
-            >
-              Accelerate your development process with our expert team, cutting-edge
-              tools, and seamless integrations. From concept to deployment, we help
-              you build, test, and ship high-quality applications faster than ever
-              before.
-            </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-              <motion.div
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 40px oklch(0.62 0.08 180 / 0.4)",
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  onClick={() => onNavigate("signin")}
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg glow-effect gap-2 relative overflow-hidden group"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Get Started
-                    <motion.span
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowRight className="w-5 h-5" />
-                    </motion.span>
-                  </span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: "100%" }}
-                    transition={{ duration: 0.5 }}
-                  />
-                </Button>
-              </motion.div>
-              {/* <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-primary/30 hover:border-primary hover:bg-primary/10 text-foreground px-8 py-6 text-lg"
-                >
-                  Watch Demo
-                </Button>
-              </motion.div> */}
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 80, rotateX: -15 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-16 md:mt-24 perspective-1000"
-          >
-            <motion.div
-              className="glass-card rounded-3xl p-8 md:p-12 gradient-border glow-effect"
-              whileHover={{ rotateX: 2, rotateY: -2, scale: 1.01 }}
-              transition={{ duration: 0.3 }}
-            >
+          <div className="mt-16 md:mt-24 perspective-1000">
+            <div className="glass-card rounded-3xl p-8 md:p-12 gradient-border glow-effect">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                 {[
                   { value: "99.9%", label: "Uptime SLA" },
                   { value: "10K+", label: "Deployments" },
                   { value: "150ms", label: "Avg Response" },
-                ].map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      delay: 1.4 + index * 0.15,
-                      type: "spring",
-                      stiffness: 200,
-                    }}
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    className="text-center cursor-default"
-                  >
+                ].map((stat) => (
+                  <div key={stat.label} className="text-center cursor-default">
                     <div className="font-heading font-bold text-3xl md:text-4xl gradient-text mb-2">
-                      <AnimatedCounter value={stat.value} />
+                      {stat.value}
                     </div>
                     <div className="text-muted-foreground text-sm">
                       {stat.label}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 rounded-full border-2 border-primary/30 flex justify-center pt-2"
-          >
-            <motion.div
-              animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 h-1.5 rounded-full bg-primary"
-            />
-          </motion.div>
-        </motion.div>
-      </section>
-
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
-        <motion.div
-          className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-1/3 right-1/4 w-48 h-48 bg-accent/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, -20, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              whileInView={{ scale: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", damping: 12 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-            >
-              <Quotes className="w-4 h-4 text-primary" weight="fill" />
-              <span className="text-sm font-medium text-primary">
-                Customer Stories
-              </span>
-            </motion.div>
-
-            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-              Trusted by <span className="gradient-text">Industry Leaders</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              See what real clients and teams have to say about working with
-              SocketShock
-            </p>
-          </motion.div>
-
-          <div className="flex flex-row flex-wrap justify-center gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 60, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.08,
-                  type: "spring",
-                  stiffness: 100,
-                }}
-                whileHover={{
-                  y: -10,
-                  scale: 1.02,
-                  transition: { duration: 0.2 },
-                }}
-                className="group max-w-xl"
-              >
-                <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border relative overflow-hidden">
-                  <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <motion.div
-                    initial={{ opacity: 0.1 }}
-                    whileHover={{ opacity: 0.2, rotate: 10, scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Quotes
-                      className="absolute top-4 right-4 w-8 h-8 text-primary transition-colors"
-                      weight="fill"
-                    />
-                  </motion.div>
-
-                  <div className="flex items-center gap-1 mb-4 relative z-10">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 + i * 0.1, type: "spring" }}
-                      >
-                        <Star
-                          className="w-4 h-4 text-amber-400"
-                          weight="fill"
-                        />
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <p className="text-foreground/90 leading-relaxed mb-6 text-sm relative z-10">
-                    "{testimonial.quote}"
-                  </p>
-
-                  <div className="flex items-center gap-3 pt-4 border-t border-border/50 relative z-10">
-                    <motion.div
-                      className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-semibold text-sm"
-                      whileHover={{ scale: 1.15, rotate: 10 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      {testimonial.avatar}
-                    </motion.div>
-                    <div>
-                      <div className="font-heading font-semibold text-foreground text-sm">
-                        {testimonial.name}
-                      </div>
-                      <div className="text-muted-foreground text-xs">
-                        {testimonial.role}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+      <div
+        style={{ contentVisibility: "auto", containIntrinsicSize: "5000px" }}
+      >
+        <section className="relative py-24 md:py-32 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
+            className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              x: [0, 30, 0],
+              y: [0, -20, 0],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-1/3 right-1/4 w-48 h-48 bg-accent/5 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              x: [0, -20, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+
+          <div className="relative mx-auto max-w-7xl px-4 md:px-6">
             <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              whileInView={{ scale: 1, rotate: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ type: "spring", damping: 12 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
             >
-              <Wrench className="w-4 h-4 text-accent" weight="fill" />
-              <span className="text-sm font-medium text-accent">
-                Internal Tools
-              </span>
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", damping: 12 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+              >
+                <Quotes className="w-4 h-4 text-primary" weight="fill" />
+                <span className="text-sm font-medium text-primary">
+                  Customer Stories
+                </span>
+              </motion.div>
+
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Trusted by{" "}
+                <span className="gradient-text">Industry Leaders</span>
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                See what real clients and teams have to say about working with
+                SocketShock
+              </p>
             </motion.div>
 
-            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-              Powerful <span className="gradient-text">Internal Tools</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Take control of your projects with our suite of internal tools
-              designed for maximum efficiency
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {internalTools.map((tool, index) => (
-              <motion.div
-                key={tool.title}
-                initial={{
-                  opacity: 0,
-                  x: index % 2 === 0 ? -80 : 80,
-                  rotateY: index % 2 === 0 ? -15 : 15,
-                }}
-                whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{
-                  duration: 0.7,
-                  delay: index * 0.1,
-                  ease: "easeOut",
-                }}
-                whileHover={{ scale: 1.03, y: -5 }}
-                className="group perspective-1000"
-              >
-                <div className="glass-card rounded-3xl p-8 h-full transition-all duration-300 hover:border-primary/40 gradient-border glow-effect relative overflow-hidden">
-                  <motion.div
-                    className="absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-2xl"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  />
-                  <div className="flex items-start gap-6 relative z-10">
+            <div className="flex flex-row flex-wrap justify-center gap-8">
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={testimonial.name}
+                  initial={{ opacity: 0, y: 60, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.08,
+                    type: "spring",
+                    stiffness: 100,
+                  }}
+                  whileHover={{
+                    y: -10,
+                    scale: 1.02,
+                    transition: { duration: 0.2 },
+                  }}
+                  className="group max-w-xl"
+                >
+                  <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border relative overflow-hidden">
+                    <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <motion.div
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                      className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0"
+                      initial={{ opacity: 0.1 }}
+                      whileHover={{ opacity: 0.2, rotate: 10, scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      <tool.icon
-                        className="w-8 h-8 text-primary"
-                        weight="duotone"
+                      <Quotes
+                        className="absolute top-4 right-4 w-8 h-8 text-primary transition-colors"
+                        weight="fill"
                       />
                     </motion.div>
-                    <div>
-                      <h3 className="font-heading font-semibold text-xl text-foreground mb-3">
-                        {tool.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {tool.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
-        <MacbookScrollComponent />
-      </section>
-
-      <section id="features" className="relative py-24 md:py-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/50 to-transparent pointer-events-none" />
-
-        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <motion.h2
-              className="font-heading font-bold text-3xl md:text-5xl mb-4"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Everything You Need to{" "}
-              <span className="gradient-text">Build & Scale</span>
-            </motion.h2>
-            <motion.p
-              className="text-muted-foreground text-lg max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              A comprehensive suite of tools and services designed for modern
-              development workflows
-            </motion.p>
-          </motion.div>
-
-          <div className="flex flex-wrap justify-center gap-6">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 50, rotateX: -10 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.03 }}
-                whileHover={{
-                  y: -12,
-                  scale: 1.03,
-                  rotateY: 5,
-                  transition: { duration: 0.2 },
-                }}
-                className="group w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] perspective-1000"
-              >
-                <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border text-center flex flex-col items-center relative overflow-hidden">
-                  <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <motion.div
-                    whileHover={{ rotate: [0, -10, 10, -5, 5, 0], scale: 1.15 }}
-                    transition={{ duration: 0.5 }}
-                    className="relative w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors"
-                  >
-                    <feature.icon
-                      className="w-7 h-7 text-primary"
-                      weight="duotone"
-                    />
-                    <motion.div
-                      className="absolute inset-0 rounded-xl bg-primary/20"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileHover={{ scale: 1.5, opacity: 0 }}
-                      transition={{ duration: 0.4 }}
-                    />
-                  </motion.div>
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-3 relative z-10">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed relative z-10">
-                    {feature.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
-        <WorldMapComponent />
-      </section>
-
-      <section id="pricing" className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-        </div>
-        <div className="absolute top-1/3 right-1/6 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
-        <div
-          className="absolute bottom-1/4 left-1/6 w-56 h-56 bg-accent/5 rounded-full blur-3xl animate-pulse-glow"
-          style={{ animationDelay: "2s" }}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <motion.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", damping: 15 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-            >
-              <CurrencyDollar className="w-4 h-4 text-primary" weight="fill" />
-              <span className="text-sm font-medium text-primary">
-                Simple Pricing
-              </span>
-            </motion.div>
-
-            <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
-              Plans That <span className="gradient-text">Scale With You</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Transparent, competitive, and straightforward pricing to fit your development needs.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={plan.name}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                whileHover={{ y: -8, scale: plan.popular ? 1.02 : 1.01 }}
-                className={`group relative ${
-                  plan.popular ? "md:-mt-4 md:mb-4" : ""
-                }`}
-              >
-                {plan.popular && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3, type: "spring" }}
-                    className="absolute -top-4 left-1/2 -translate-x-1/2 z-10"
-                  >
-                    <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs font-semibold shadow-lg">
-                      Most Popular
-                    </div>
-                  </motion.div>
-                )}
-
-                <div
-                  className={`glass-card rounded-3xl p-8 h-full transition-all duration-300 gradient-border relative overflow-hidden ${
-                    plan.popular
-                      ? "border-primary/50 glow-effect bg-gradient-to-b from-primary/5 to-transparent"
-                      : "hover:border-primary/30"
-                  }`}
-                >
-                  {plan.popular && (
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full" />
-                  )}
-
-                  <div className="relative">
-                    <div className="flex items-center gap-3 mb-4">
-                      <motion.div
-                        whileHover={{ rotate: 12, scale: 1.1 }}
-                        transition={{ duration: 0.3 }}
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                          plan.popular
-                            ? "bg-gradient-to-br from-primary to-accent"
-                            : "bg-primary/10"
-                        }`}
-                      >
-                        <plan.icon
-                          className={`w-6 h-6 ${
-                            plan.popular
-                              ? "text-primary-foreground"
-                              : "text-primary"
-                          }`}
-                          weight="duotone"
-                        />
-                      </motion.div>
-                      <h3 className="font-heading font-bold text-xl text-foreground">
-                        {plan.name}
-                      </h3>
-                    </div>
-
-                    <p className="text-muted-foreground text-sm mb-6 min-h-[40px]">
-                      {plan.description}
-                    </p>
-
-                    <div className="mb-6">
-                      {plan.price !== null ? (
-                        <div className="flex items-baseline gap-1">
-                          <span className="font-heading font-bold text-4xl md:text-5xl gradient-text">
-                            ${plan.price}
-                          </span>
-                          <span className="text-muted-foreground text-sm">
-                            /{plan.period}
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="font-heading font-bold text-3xl md:text-4xl gradient-text">
-                          Custom
-                        </div>
+                    <div className="flex items-center gap-1 mb-4 relative z-10">
+                      {Array.from({ length: testimonial.rating }).map(
+                        (_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                            viewport={{ once: true }}
+                            transition={{
+                              delay: 0.3 + i * 0.1,
+                              type: "spring",
+                            }}
+                          >
+                            <Star
+                              className="w-4 h-4 text-amber-400"
+                              weight="fill"
+                            />
+                          </motion.div>
+                        ),
                       )}
                     </div>
 
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.map((feature, featureIndex) => (
-                        <motion.li
-                          key={feature}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 0.4 + featureIndex * 0.05 }}
-                          className="flex items-start gap-3"
-                        >
-                          <Check
-                            className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
-                              plan.popular
-                                ? "text-primary"
-                                : "text-muted-foreground"
-                            }`}
-                            weight="bold"
-                          />
-                          <span className="text-foreground/80 text-sm">
-                            {feature}
-                          </span>
-                        </motion.li>
-                      ))}
-                    </ul>
+                    <p className="text-foreground/90 leading-relaxed mb-6 text-sm relative z-10">
+                      "{testimonial.quote}"
+                    </p>
 
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <Button
-                        onClick={() => onNavigate("signin")}
-                        className={`w-full py-6 font-semibold ${
-                          plan.popular
-                            ? "bg-primary hover:bg-primary/90 text-primary-foreground glow-effect"
-                            : "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border/50"
-                        }`}
+                    <div className="flex items-center gap-3 pt-4 border-t border-border/50 relative z-10">
+                      <motion.div
+                        className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-semibold text-sm"
+                        whileHover={{ scale: 1.15, rotate: 10 }}
+                        transition={{ type: "spring", stiffness: 300 }}
                       >
-                        {plan.cta}
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </motion.div>
+                        {testimonial.avatar}
+                      </motion.div>
+                      <div>
+                        <div className="font-heading font-semibold text-foreground text-sm">
+                          {testimonial.name}
+                        </div>
+                        <div className="text-muted-foreground text-xs">
+                          {testimonial.role}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="relative py-24 md:py-32 overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
           </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-            className="text-center text-muted-foreground text-sm mt-10"
-          >
-            * Average costs. Actual cost may vary. All prices are in USD. Taxes
-            may apply based on your location.
-          </motion.p>
+          <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", damping: 12 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6"
+              >
+                <Wrench className="w-4 h-4 text-accent" weight="fill" />
+                <span className="text-sm font-medium text-accent">
+                  Internal Tools
+                </span>
+              </motion.div>
 
-          {/* <motion.div
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Powerful <span className="gradient-text">Internal Tools</span>
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Take control of your projects with our suite of internal tools
+                designed for maximum efficiency
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {internalTools.map((tool, index) => (
+                <motion.div
+                  key={tool.title}
+                  initial={{
+                    opacity: 0,
+                    x: index % 2 === 0 ? -80 : 80,
+                    rotateY: index % 2 === 0 ? -15 : 15,
+                  }}
+                  whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{
+                    duration: 0.7,
+                    delay: index * 0.1,
+                    ease: "easeOut",
+                  }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="group perspective-1000"
+                >
+                  <div className="glass-card rounded-3xl p-8 h-full transition-all duration-300 hover:border-primary/40 gradient-border glow-effect relative overflow-hidden">
+                    <motion.div
+                      className="absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-2xl"
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                    />
+                    <div className="flex items-start gap-6 relative z-10">
+                      <motion.div
+                        whileHover={{ rotate: 360, scale: 1.1 }}
+                        transition={{ duration: 0.6 }}
+                        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0"
+                      >
+                        <tool.icon
+                          className="w-8 h-8 text-primary"
+                          weight="duotone"
+                        />
+                      </motion.div>
+                      <div>
+                        <h3 className="font-heading font-semibold text-xl text-foreground mb-3">
+                          {tool.title}
+                        </h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {tool.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
+          <Suspense fallback={<div className="h-[600px]" />}>
+            <MacbookScrollComponent />
+          </Suspense>
+        </section>
+
+        <section id="features" className="relative py-24 md:py-32">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/50 to-transparent pointer-events-none" />
+
+          <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
+              <motion.h2
+                className="font-heading font-bold text-3xl md:text-5xl mb-4"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                Everything You Need to{" "}
+                <span className="gradient-text">Build & Scale</span>
+              </motion.h2>
+              <motion.p
+                className="text-muted-foreground text-lg max-w-2xl mx-auto"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                A comprehensive suite of tools and services designed for modern
+                development workflows
+              </motion.p>
+            </motion.div>
+
+            <div className="flex flex-wrap justify-center gap-6">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 50, rotateX: -10 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.03 }}
+                  whileHover={{
+                    y: -12,
+                    scale: 1.03,
+                    rotateY: 5,
+                    transition: { duration: 0.2 },
+                  }}
+                  className="group w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)] perspective-1000"
+                >
+                  <div className="glass-card rounded-2xl p-6 h-full transition-all duration-300 hover:border-primary/40 gradient-border text-center flex flex-col items-center relative overflow-hidden">
+                    <motion.div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <motion.div
+                      whileHover={{
+                        rotate: [0, -10, 10, -5, 5, 0],
+                        scale: 1.15,
+                      }}
+                      transition={{ duration: 0.5 }}
+                      className="relative w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors"
+                    >
+                      <feature.icon
+                        className="w-7 h-7 text-primary"
+                        weight="duotone"
+                      />
+                      <motion.div
+                        className="absolute inset-0 rounded-xl bg-primary/20"
+                        initial={{ scale: 0, opacity: 0 }}
+                        whileHover={{ scale: 1.5, opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                      />
+                    </motion.div>
+                    <h3 className="font-heading font-semibold text-lg text-foreground mb-3 relative z-10">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10">
+                      {feature.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
+          <Suspense fallback={<div className="h-[400px]" />}>
+            <WorldMapComponent />
+          </Suspense>
+        </section>
+
+        <section
+          id="pricing"
+          className="relative py-24 md:py-32 overflow-hidden"
+        >
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          </div>
+          <div className="absolute top-1/3 right-1/6 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" />
+          <div
+            className="absolute bottom-1/4 left-1/6 w-56 h-56 bg-accent/5 rounded-full blur-3xl animate-pulse-glow"
+            style={{ animationDelay: "2s" }}
+          />
+
+          <div className="relative mx-auto max-w-7xl px-4 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-16"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", damping: 15 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+              >
+                <CurrencyDollar
+                  className="w-4 h-4 text-primary"
+                  weight="fill"
+                />
+                <span className="text-sm font-medium text-primary">
+                  Simple Pricing
+                </span>
+              </motion.div>
+
+              <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
+                Plans That <span className="gradient-text">Scale With You</span>
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Transparent, competitive, and straightforward pricing to fit
+                your development needs.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              {pricingPlans.map((plan, index) => (
+                <motion.div
+                  key={plan.name}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.15 }}
+                  whileHover={{ y: -8, scale: plan.popular ? 1.02 : 1.01 }}
+                  className={`group relative ${
+                    plan.popular ? "md:-mt-4 md:mb-4" : ""
+                  }`}
+                >
+                  {plan.popular && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3, type: "spring" }}
+                      className="absolute -top-4 left-1/2 -translate-x-1/2 z-10"
+                    >
+                      <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground text-xs font-semibold shadow-lg">
+                        Most Popular
+                      </div>
+                    </motion.div>
+                  )}
+
+                  <div
+                    className={`glass-card rounded-3xl p-8 h-full transition-all duration-300 gradient-border relative overflow-hidden ${
+                      plan.popular
+                        ? "border-primary/50 glow-effect bg-gradient-to-b from-primary/5 to-transparent"
+                        : "hover:border-primary/30"
+                    }`}
+                  >
+                    {plan.popular && (
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full" />
+                    )}
+
+                    <div className="relative">
+                      <div className="flex items-center gap-3 mb-4">
+                        <motion.div
+                          whileHover={{ rotate: 12, scale: 1.1 }}
+                          transition={{ duration: 0.3 }}
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                            plan.popular
+                              ? "bg-gradient-to-br from-primary to-accent"
+                              : "bg-primary/10"
+                          }`}
+                        >
+                          <plan.icon
+                            className={`w-6 h-6 ${
+                              plan.popular
+                                ? "text-primary-foreground"
+                                : "text-primary"
+                            }`}
+                            weight="duotone"
+                          />
+                        </motion.div>
+                        <h3 className="font-heading font-bold text-xl text-foreground">
+                          {plan.name}
+                        </h3>
+                      </div>
+
+                      <p className="text-muted-foreground text-sm mb-6 min-h-[40px]">
+                        {plan.description}
+                      </p>
+
+                      <div className="mb-6">
+                        {plan.price !== null ? (
+                          <div className="flex items-baseline gap-1">
+                            <span className="font-heading font-bold text-4xl md:text-5xl gradient-text">
+                              ${plan.price}
+                            </span>
+                            <span className="text-muted-foreground text-sm">
+                              /{plan.period}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="font-heading font-bold text-3xl md:text-4xl gradient-text">
+                            Custom
+                          </div>
+                        )}
+                      </div>
+
+                      <ul className="space-y-3 mb-8">
+                        {plan.features.map((feature, featureIndex) => (
+                          <motion.li
+                            key={feature}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.4 + featureIndex * 0.05 }}
+                            className="flex items-start gap-3"
+                          >
+                            <Check
+                              className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
+                                plan.popular
+                                  ? "text-primary"
+                                  : "text-muted-foreground"
+                              }`}
+                              weight="bold"
+                            />
+                            <span className="text-foreground/80 text-sm">
+                              {feature}
+                            </span>
+                          </motion.li>
+                        ))}
+                      </ul>
+
+                      <motion.div
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <Button
+                          onClick={() => onNavigate("signin")}
+                          className={`w-full py-6 font-semibold ${
+                            plan.popular
+                              ? "bg-primary hover:bg-primary/90 text-primary-foreground glow-effect"
+                              : "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border/50"
+                          }`}
+                        >
+                          {plan.cta}
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+              className="text-center text-muted-foreground text-sm mt-10"
+            >
+              * Average costs. Actual cost may vary. All prices are in USD.
+              Taxes may apply based on your location.
+            </motion.p>
+
+            {/* <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -1454,97 +1323,106 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               </div>
             </div>
           </motion.div> */}
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <section className="mx-auto flex flex-col gap-4">
-        <CodeBlockComponent />
-      </section>
+        <section className="mx-auto flex flex-col gap-4">
+          <Suspense fallback={<div className="h-[300px]" />}>
+            <CodeBlockComponent />
+          </Suspense>
+        </section>
 
-      <section className="mx-auto flex flex-col gap-4">
-        <h1 className="text-2xl text-center font-semibold mt-24 mb-8p-2 max-w-4xl mx-auto text-muted-foreground ">
-          We also offer graphic design services to complement your development
-          projects. From logos to efficient image optimization and quality, our team is here
-          to help you with your visual branding needs.
-        </h1>
-        <ParallaxScrollComponent />
-      </section>
+        <section className="mx-auto flex flex-col gap-4">
+          <h1 className="text-2xl text-center font-semibold mt-24 mb-8p-2 max-w-4xl mx-auto text-muted-foreground ">
+            We also offer graphic design services to complement your development
+            projects. From logos to efficient image optimization and quality,
+            our team is here to help you with your visual branding needs.
+          </h1>
+          <Suspense fallback={<div className="h-[400px]" />}>
+            <ParallaxScrollComponent />
+          </Suspense>
+        </section>
 
-      <section className="relative py-24 md:py-32">
-        <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent pointer-events-none" />
+        <section className="relative py-24 md:py-32">
+          <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent pointer-events-none" />
 
-        <div className="relative mx-auto max-w-4xl px-4 md:px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.h2
-              className="font-heading font-bold text-3xl md:text-5xl mb-6"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-            >
-              Ready to{" "}
-              <motion.span
-                className="gradient-text inline-block"
-                animate={{
-                  textShadow: [
-                    "0 0 20px oklch(0.62 0.08 180 / 0.3)",
-                    "0 0 40px oklch(0.62 0.08 180 / 0.5)",
-                    "0 0 20px oklch(0.62 0.08 180 / 0.3)",
-                  ],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                Transform
-              </motion.span>{" "}
-              Your Development?
-            </motion.h2>
-            <motion.p
-              className="text-muted-foreground text-lg mb-10 max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              Spark your next project with SocketShock and let you ideas come to
-              light.
-            </motion.p>
-
+          <div className="relative mx-auto max-w-4xl px-4 md:px-6 text-center">
             <motion.div
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
+              transition={{ duration: 0.6 }}
             >
-              <Button
-                onClick={() => onNavigate("signin")}
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-10 py-6 text-lg glow-effect gap-2 relative overflow-hidden group"
+              <motion.h2
+                className="font-heading font-bold text-3xl md:text-5xl mb-6"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
               >
-                <span className="relative z-10 flex items-center gap-2">
-                  Start Building Today
-                  <motion.span
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.span>
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  animate={{ x: ["-100%", "100%"] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                />
-              </Button>
+                Ready to{" "}
+                <motion.span
+                  className="gradient-text inline-block"
+                  animate={{
+                    textShadow: [
+                      "0 0 20px oklch(0.62 0.08 180 / 0.3)",
+                      "0 0 40px oklch(0.62 0.08 180 / 0.5)",
+                      "0 0 20px oklch(0.62 0.08 180 / 0.3)",
+                    ],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  Transform
+                </motion.span>{" "}
+                Your Development?
+              </motion.h2>
+              <motion.p
+                className="text-muted-foreground text-lg mb-10 max-w-2xl mx-auto"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                Spark your next project with SocketShock and let you ideas come
+                to light.
+              </motion.p>
+
+              <motion.div
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <Button
+                  onClick={() => onNavigate("signin")}
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-10 py-6 text-lg glow-effect gap-2 relative overflow-hidden group"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Start Building Today
+                    <motion.span
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.span>
+                  </span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    animate={{ x: ["-100%", "100%"] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 1,
+                    }}
+                  />
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

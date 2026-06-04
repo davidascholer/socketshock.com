@@ -1,16 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useKV } from "@github/spark/hooks";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster } from "sonner";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import LandingPage from "./components/pages/LandingPage";
-import SignInPage from "./components/pages/SignInPage";
-import PrivacyPage from "./components/pages/PrivacyPage";
-import TermsPage from "./components/pages/TermsPage";
-import ProjectsPage from "./components/pages/ProjectsPage";
-import DecisionTreePage from "./components/pages/DecisionTreePage";
-import DistributionTreePage from "./components/pages/DistributionTreePage";
-import NotFoundPage from "./components/pages/NotFoundPage";
+const SignInPage = lazy(() => import("./components/pages/SignInPage"));
+const PrivacyPage = lazy(() => import("./components/pages/PrivacyPage"));
+const TermsPage = lazy(() => import("./components/pages/TermsPage"));
+const ProjectsPage = lazy(() => import("./components/pages/ProjectsPage"));
+const DecisionTreePage = lazy(
+  () => import("./components/pages/DecisionTreePage"),
+);
+const DistributionTreePage = lazy(
+  () => import("./components/pages/DistributionTreePage"),
+);
+const NotFoundPage = lazy(() => import("./components/pages/NotFoundPage"));
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import CookieConsent from "./components/CookieConsent";
@@ -108,22 +112,27 @@ function App() {
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <Routes>
-            <Route path="/" element={<LandingPage onNavigate={navigateTo} />} />
-            <Route path="/signin" element={<SignInPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route
-              path="/projects/decision-tree"
-              element={<DecisionTreePage />}
-            />
-            <Route
-              path="/projects/distribution-tree"
-              element={<DistributionTreePage />}
-            />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          <Suspense fallback={<div className="min-h-screen" />}>
+            <Routes>
+              <Route
+                path="/"
+                element={<LandingPage onNavigate={navigateTo} />}
+              />
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route
+                path="/projects/decision-tree"
+                element={<DecisionTreePage />}
+              />
+              <Route
+                path="/projects/distribution-tree"
+                element={<DistributionTreePage />}
+              />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
         </motion.main>
       </AnimatePresence>
 

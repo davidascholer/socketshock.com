@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Lightning, SignIn, Sun, Moon } from "@phosphor-icons/react";
+import { Lightning, SignIn } from "@phosphor-icons/react";
 import { useTheme } from "@/hooks/use-theme";
 
 type Page = "home" | "signin" | "privacy" | "terms";
@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 export default function Header({ currentPage, onNavigate }: HeaderProps) {
-  const { theme, toggleTheme } = useTheme();
+  useTheme();
 
   return (
     <motion.header
@@ -69,40 +69,6 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
             </motion.button>
 
             <nav className="flex items-center gap-3">
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 15 }}
-                whileTap={{ scale: 0.9 }}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6, type: "spring" }}
-              >
-                <Button
-                  onClick={toggleTheme}
-                  variant="ghost"
-                  size="icon"
-                  className="w-10 h-10 rounded-xl text-[oklch(0.95_0.01_260)] hover:bg-primary/10 hover:text-primary relative overflow-hidden"
-                  aria-label={
-                    theme === "dark"
-                      ? "Switch to light mode"
-                      : "Switch to dark mode"
-                  }
-                >
-                  <motion.div
-                    key={theme}
-                    initial={{ y: -20, opacity: 0, rotate: -90 }}
-                    animate={{ y: 0, opacity: 1, rotate: 0 }}
-                    exit={{ y: 20, opacity: 0, rotate: 90 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {theme === "dark" ? (
-                      <Sun className="w-5 h-5" weight="fill" />
-                    ) : (
-                      <Moon className="w-5 h-5" weight="fill" />
-                    )}
-                  </motion.div>
-                </Button>
-              </motion.div>
-
               {currentPage !== "signin" && (
                 <motion.div
                   whileHover={{ scale: 1.05 }}
