@@ -259,6 +259,59 @@ function FloatingParticle({
   );
 }
 
+function SectionLoader({
+  heightClass,
+  label,
+}: {
+  heightClass: string;
+  label: string;
+}) {
+  return (
+    <div
+      className={`${heightClass} flex items-center justify-center px-4`}
+      aria-busy="true"
+      aria-live="polite"
+    >
+      <div className="glass-card relative w-full max-w-md overflow-hidden rounded-3xl border border-primary/15 bg-card/70 p-8 text-center shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+        <motion.div
+          className="relative mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-primary/20 bg-background/80 shadow-lg"
+          animate={{ rotate: [0, 8, 0, -8, 0], scale: [1, 1.05, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <motion.img
+            src="/images/socketshock_filled.svg"
+            alt="SocketShock loading"
+            className="h-14 w-14"
+            animate={{ y: [0, -3, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute inset-0 rounded-full border border-primary/25"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0, 0.4] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+          />
+        </motion.div>
+        <div className="relative space-y-2">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary/80">
+            Loading {label}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Building the next section with your theme intact.
+          </p>
+        </div>
+        <div className="relative mt-6 h-1 overflow-hidden rounded-full bg-primary/10">
+          <motion.div
+            className="h-full w-1/2 rounded-full bg-gradient-to-r from-primary via-accent to-primary"
+            animate={{ x: ["-100%", "200%"] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const testimonials = [
   {
     name: "Austin",
@@ -825,7 +878,11 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         </section>
 
         <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
-          <Suspense fallback={<div className="h-[600px]" />}>
+          <Suspense
+            fallback={
+              <SectionLoader heightClass="h-[600px]" label="the overview" />
+            }
+          >
             <MacbookScrollComponent />
           </Suspense>
         </section>
@@ -914,7 +971,9 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         </section>
 
         <section className="min-w-80 max-w-4xl mx-auto overflow-hidden w-full">
-          <Suspense fallback={<div className="h-[400px]" />}>
+          <Suspense
+            fallback={<SectionLoader heightClass="h-[400px]" label="the map" />}
+          >
             <WorldMapComponent />
           </Suspense>
         </section>
@@ -1327,7 +1386,11 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         </section>
 
         <section className="mx-auto flex flex-col gap-4">
-          <Suspense fallback={<div className="h-[300px]" />}>
+          <Suspense
+            fallback={
+              <SectionLoader heightClass="h-[300px]" label="the code block" />
+            }
+          >
             <CodeBlockComponent />
           </Suspense>
         </section>
@@ -1338,7 +1401,11 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             projects. From logos to efficient image optimization and quality,
             our team is here to help you with your visual branding needs.
           </h1>
-          <Suspense fallback={<div className="h-[400px]" />}>
+          <Suspense
+            fallback={
+              <SectionLoader heightClass="h-[400px]" label="the gallery" />
+            }
+          >
             <ParallaxScrollComponent />
           </Suspense>
         </section>
